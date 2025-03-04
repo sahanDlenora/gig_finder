@@ -1,0 +1,186 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:gig_finder/utils/constants/colors.dart';
+import 'package:gig_finder/widgets/reusable/custom_button.dart';
+import 'package:gig_finder/widgets/reusable/custom_input.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+
+class RegisterScreen extends StatefulWidget {
+  RegisterScreen({super.key});
+
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _contactNumController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  final TextEditingController _imageUrlController = TextEditingController();
+
+  File? _imageFile;
+
+  // Pick an image from the gallery or camera
+  Future<void> _pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 40),
+                const Image(
+                  image: AssetImage('assets/Logo.png'),
+                  height: 70,
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          _imageFile != null
+                              ? CircleAvatar(
+                                  radius: 64,
+                                  backgroundImage: FileImage(_imageFile!),
+                                  backgroundColor: mainPurpleColor,
+                                )
+                              : const CircleAvatar(
+                                  radius: 64,
+                                  backgroundImage: NetworkImage(
+                                      'https://i.stack.imgur.com/l60Hf.png'),
+                                  backgroundColor: mainPurpleColor,
+                                ),
+                          Positioned(
+                            bottom: -10,
+                            left: 80,
+                            child: IconButton(
+                              onPressed: () => _pickImage(ImageSource.gallery),
+                              icon: const Icon(Icons.add_a_photo),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      ReusableInput(
+                        controller: _nameController,
+                        labelText: 'Name',
+                        icon: Icons.person,
+                        obscureText: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      ReusableInput(
+                        controller: _emailController,
+                        labelText: 'Email',
+                        icon: Icons.email,
+                        obscureText: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                            return 'Please enter a valid email address';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      ReusableInput(
+                        controller: _contactNumController,
+                        labelText: 'Contact Number',
+                        icon: Icons.work,
+                        obscureText: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your contact number';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      ReusableInput(
+                        controller: _passwordController,
+                        labelText: 'Password',
+                        icon: Icons.lock,
+                        obscureText: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          if (value.length < 6) {
+                            return 'Password must be at least 6 characters long';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      ReusableInput(
+                        controller: _confirmPasswordController,
+                        labelText: 'Confirm Password',
+                        icon: Icons.lock,
+                        obscureText: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please confirm your password';
+                          }
+                          if (value != _passwordController.text) {
+                            return 'Passwords do not match';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      ReusableButton(
+                        text: 'Sign Up',
+                        width: MediaQuery.of(context).size.width,
+                        onPressed: () {},
+                      ),
+                      const SizedBox(height: 16),
+                      TextButton(
+                        onPressed: () {
+                          // Navigate to login screen
+                          GoRouter.of(context).go('/login');
+                        },
+                        child: const Text(
+                          'Already have an account? Log in',
+                          style: TextStyle(color: mainWhiteColor),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
