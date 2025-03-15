@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:gig_finder/models/user_model.dart';
+import 'package:gig_finder/service/users/user_service.dart';
+import 'package:gig_finder/service/users/user_storage.dart';
 import 'package:gig_finder/utils/constants/colors.dart';
 import 'package:gig_finder/widgets/reusable/custom_button.dart';
 import 'package:gig_finder/widgets/reusable/custom_input.dart';
@@ -19,8 +22,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _contactNumController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _userTypeController = TextEditingController();
+  final TextEditingController _aboutController = TextEditingController();
   final TextEditingController _imageUrlController = TextEditingController();
 
   File? _imageFile;
@@ -35,7 +39,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     }
   }
-  
+
+  // Sign up with email and password
+Future<void> _createUser(BuildContext context) async {
+  try {
+    // Store the user image in storage and get the download URL
+    String profilePicture = ""; // Default empty string if no image is uploaded
+    if (_imageFile != null) {
+      profilePicture = await UserProfileStorageService().uploadImage(
+        profileImage: _imageFile!,
+        userEmail: _emailController.text,
+      );
+    }
+
+    // Save user to Firestore
+    UserService().saveUser(
+      UserModel(
+        userId: "", // You might want to generate a unique ID here
+        name: _nameController.text,
+        email: _emailController.text,
+        contact: _contactNumController.text, // Assuming you have a contact controller
+        userType: _userTypeController.text, // Assuming you have a userType controller
+        profilePicture: profilePicture,
+        about: _aboutController.text, // Assuming you have an about controller
+        rating: 0.0, // Default rating for a new user
+        password: _passwordController.text,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ),
+    );
+
+    // Show snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('User created successfully'),
+      ),
+    );
+
+    // Navigate to the main screen
+    GoRouter.of(context).go('/main-screen');
+  } catch (e) {
+    print('Error signing up with email and password: $e');
+    // Show snackbar with error message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error signing up with email and password: $e'),
+      ),
+    );
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,7 +211,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ReusableButton(
                         text: 'Sign Up',
                         width: MediaQuery.of(context).size.width,
-                        onPressed: () {},
+                        onPressed: () async {
+                          if (_formKey.currentState?.validate() ?? false) {
+                            await _createUser(context);
+                          }
+                        },
                       ),
                       const SizedBox(height: 16),
                       TextButton(
