@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gig_finder/service/auth/auth_services.dart';
 import 'package:gig_finder/utils/constants/colors.dart';
+import 'package:gig_finder/utils/functions/functions.dart';
 import 'package:gig_finder/widgets/reusable/custom_button.dart';
 import 'package:gig_finder/widgets/reusable/custom_input.dart';
 import 'package:go_router/go_router.dart';
@@ -20,22 +21,13 @@ class LoginScreen extends StatelessWidget {
       // Sign in with Google
       await AuthService().signInWithGoogle();
 
+      UtilFunctions().showSnackBar(context, "User sign in Successfully..");
+
       GoRouter.of(context).go('/main-screen');
     } catch (e) {
       print('Error signing in with Google: $e');
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Error'),
-          content: Text('Error signing in with Google: $e'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
+      UtilFunctions().showSnackBar(context, "Error signing in with Google: $e");
+      
     }
   }
 
@@ -48,23 +40,13 @@ class LoginScreen extends StatelessWidget {
         password: _passwordController.text,
       );
 
+      UtilFunctions().showSnackBar(context, "User sign in Successfully..");
+
       GoRouter.of(context).go('/main-screen');
     } catch (e) {
       print('Error signing in with email and password: $e');
-      showDialog(
-        // ignore: use_build_context_synchronously
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Error'),
-          content: Text('Error signing in with email and password: $e'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
+      
+      UtilFunctions().showSnackBar(context, "Error signing in with email and password: $e");
     }
   }
 

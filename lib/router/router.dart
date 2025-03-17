@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gig_finder/views/auth_views/login.dart';
 import 'package:gig_finder/views/auth_views/register.dart';
-import 'package:gig_finder/views/main_views/main_screen.dart';
+import 'package:gig_finder/views/main_screen.dart';
 import 'package:gig_finder/views/responsive/mobile_layout.dart';
 import 'package:gig_finder/views/responsive/responsive_layout.dart';
 import 'package:gig_finder/views/responsive/web_layout.dart';
@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 
 class RouterClass {
   final router = GoRouter(
-    initialLocation: "/login",
+    initialLocation: "/",
     errorPageBuilder: (context, state) {
       return const MaterialPage(
         child: Scaffold(

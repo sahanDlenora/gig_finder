@@ -58,6 +58,8 @@ class AuthService {
     }
   }
 
+
+
   // Sign in with Google
   // This method will sign in the user with Google.
   Future<void> signInWithGoogle() async {
@@ -113,4 +115,19 @@ class AuthService {
       throw Exception(e.toString());
     }
   }
+
+  // Sign out
+  //This methode will sign out the user and print a message to the console
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+      print('Signed out');
+    } on FirebaseAuthException catch (e) {
+      print('Error signing out: ${mapFirebaseAuthExceptionCode(e.code)}');
+      throw Exception(mapFirebaseAuthExceptionCode(e.code));
+    } catch (e) {
+      print('Error signing out: $e');
+    }
+  }
+  
 }
