@@ -4,6 +4,7 @@ import 'package:gig_finder/models/user_model.dart';
 import 'package:gig_finder/service/users/user_service.dart';
 import 'package:gig_finder/service/users/user_storage.dart';
 import 'package:gig_finder/utils/constants/colors.dart';
+import 'package:gig_finder/utils/functions/functions.dart';
 import 'package:gig_finder/widgets/reusable/custom_button.dart';
 import 'package:gig_finder/widgets/reusable/custom_input.dart';
 import 'package:go_router/go_router.dart';
@@ -70,22 +71,17 @@ Future<void> _createUser(BuildContext context) async {
     );
 
     // Show snackbar
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('User created successfully'),
-      ),
-    );
-
+    if (context.mounted){
+      UtilFunctions().showSnackBar(context, "User created Successfully..");
+    }
     // Navigate to the main screen
     GoRouter.of(context).go('/main-screen');
   } catch (e) {
     print('Error signing up with email and password: $e');
     // Show snackbar with error message
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Error signing up with email and password: $e'),
-      ),
-    );
+    if (context.mounted){
+      UtilFunctions().showSnackBar(context, "Error signing up with email and password: $e");
+    }
   }
 }
 
