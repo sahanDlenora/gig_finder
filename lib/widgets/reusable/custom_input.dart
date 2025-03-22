@@ -8,7 +8,8 @@ class ReusableInput extends StatelessWidget {
   final bool obscureText;
   final String? Function(String?) validator;
 
-  ReusableInput({
+  const ReusableInput({
+    super.key,
     required this.controller,
     required this.labelText,
     required this.icon,
