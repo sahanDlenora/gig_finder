@@ -10,10 +10,11 @@ import 'package:gig_finder/widgets/reusable/custom_input.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
-
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  LoginScreen({super.key});
 
   // Sign in with Google
   Future<void> _signInWithGoogle(BuildContext context) async {
@@ -27,7 +28,6 @@ class LoginScreen extends StatelessWidget {
     } catch (e) {
       print('Error signing in with Google: $e');
       UtilFunctions().showSnackBar(context, "Error signing in with Google: $e");
-      
     }
   }
 
@@ -45,11 +45,11 @@ class LoginScreen extends StatelessWidget {
       GoRouter.of(context).go('/main-screen');
     } catch (e) {
       print('Error signing in with email and password: $e');
-      
-      UtilFunctions().showSnackBar(context, "Error signing in with email and password: $e");
+
+      UtilFunctions().showSnackBar(
+          context, "Error signing in with email and password: $e");
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
