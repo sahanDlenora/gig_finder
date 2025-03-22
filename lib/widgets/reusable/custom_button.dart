@@ -6,7 +6,8 @@ class ReusableButton extends StatelessWidget {
   final double width;
   final VoidCallback onPressed;
 
-  ReusableButton({
+  const ReusableButton({
+    super.key,
     required this.text,
     required this.onPressed,
     required this.width,

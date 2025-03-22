@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -23,7 +23,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _contactNumController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _userTypeController = TextEditingController();
   final TextEditingController _aboutController = TextEditingController();
   final TextEditingController _imageUrlController = TextEditingController();
@@ -42,48 +43,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   // Sign up with email and password
-Future<void> _createUser(BuildContext context) async {
-  try {
-    // Store the user image in storage and get the download URL
-    String profilePicture = ""; // Default empty string if no image is uploaded
-    if (_imageFile != null) {
-      profilePicture = await UserProfileStorageService().uploadImage(
-        profileImage: _imageFile!,
-        userEmail: _emailController.text,
+  Future<void> _createUser(BuildContext context) async {
+    try {
+      // Store the user image in storage and get the download URL
+      String profilePicture =
+          ""; // Default empty string if no image is uploaded
+      if (_imageFile != null) {
+        profilePicture = await UserProfileStorageService().uploadImage(
+          profileImage: _imageFile!,
+          userEmail: _emailController.text,
+        );
+      }
+
+      // Save user to Firestore
+      UserService().saveUser(
+        UserModel(
+          userId: "", // You might want to generate a unique ID here
+          name: _nameController.text,
+          email: _emailController.text,
+          contact: _contactNumController
+              .text, // Assuming you have a contact controller
+          userType: _userTypeController
+              .text, // Assuming you have a userType controller
+          profilePicture: profilePicture,
+          about: _aboutController.text, // Assuming you have an about controller
+          rating: 0.0, // Default rating for a new user
+          password: _passwordController.text,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
       );
-    }
 
-    // Save user to Firestore
-    UserService().saveUser(
-      UserModel(
-        userId: "", // You might want to generate a unique ID here
-        name: _nameController.text,
-        email: _emailController.text,
-        contact: _contactNumController.text, // Assuming you have a contact controller
-        userType: _userTypeController.text, // Assuming you have a userType controller
-        profilePicture: profilePicture,
-        about: _aboutController.text, // Assuming you have an about controller
-        rating: 0.0, // Default rating for a new user
-        password: _passwordController.text,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      ),
-    );
-
-    // Show snackbar
-    if (context.mounted){
-      UtilFunctions().showSnackBar(context, "User created Successfully..");
-    }
-    // Navigate to the main screen
-    GoRouter.of(context).go('/main-screen');
-  } catch (e) {
-    print('Error signing up with email and password: $e');
-    // Show snackbar with error message
-    if (context.mounted){
-      UtilFunctions().showSnackBar(context, "Error signing up with email and password: $e");
+      // Show snackbar
+      if (context.mounted) {
+        UtilFunctions().showSnackBar(context, "User created Successfully..");
+      }
+      // Navigate to the main screen
+      GoRouter.of(context).go('/main-screen');
+    } catch (e) {
+      print('Error signing up with email and password: $e');
+      // Show snackbar with error message
+      if (context.mounted) {
+        UtilFunctions().showSnackBar(
+            context, "Error signing up with email and password: $e");
+      }
     }
   }
-}
 
   @override
   Widget build(BuildContext context) {

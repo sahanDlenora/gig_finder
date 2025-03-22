@@ -19,13 +19,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: GoogleFonts.poppins().fontFamily,
-        brightness: Brightness.dark,
+        //brightness: Brightness.dark,
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Colors.transparent,
-          selectedItemColor: mainOrangeColor,
-          unselectedItemColor: mainWhiteColor,
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
         ),
         snackBarTheme: const SnackBarThemeData(
           backgroundColor: mainOrangeColor,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gig_finder/service/auth/auth_services.dart';
 import 'package:gig_finder/views/main_views/add_screen.dart';
 import 'package:gig_finder/views/main_views/favourite_screen.dart';
 import 'package:gig_finder/views/main_views/home_screen.dart';
@@ -14,7 +13,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
-  int _currentIndex = 3;
+  int _currentIndex = 0;
 
   final List<Widget> _pages = [
     HomeScreen(),
@@ -43,8 +42,8 @@ class _MainScreenState extends State<MainScreen> {
             label: "Add",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: "Favourite",
+            icon: Icon(Icons.save),
+            label: "Save",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
