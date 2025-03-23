@@ -42,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.save),
-            label: "Save",
+            label: "Saved",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
