@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gig_finder/utils/constants/colors.dart';
 
-class ReusableInput extends StatelessWidget {
+class CustomInput extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
   final IconData icon;
   final bool obscureText;
   final String? Function(String?) validator;
 
-  const ReusableInput({
+  const CustomInput({
     super.key,
     required this.controller,
     required this.labelText,
@@ -23,25 +23,32 @@ class ReusableInput extends StatelessWidget {
       borderSide: Divider.createBorderSide(context),
       borderRadius: BorderRadius.circular(8),
     );
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        border: inputBorder,
-        focusedBorder: inputBorder,
-        enabledBorder: inputBorder,
-        labelText: labelText,
-        labelStyle: const TextStyle(
-          color: mainWhiteColor,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: TextFormField(
+        style: TextStyle(
+          color: Colors.amber,
         ),
-        filled: true,
-        prefixIcon: Icon(
-          icon,
-          color: mainWhiteColor,
-          size: 20,
+        controller: controller,
+        decoration: InputDecoration(
+          border: inputBorder,
+          focusedBorder: inputBorder,
+          enabledBorder: inputBorder,
+          labelText: labelText,
+          labelStyle: const TextStyle(
+            color: Colors.grey,
+            fontSize: 14,
+          ),
+          filled: true,
+          prefixIcon: Icon(
+            icon,
+            color: mainWhiteColor,
+            size: 20,
+          ),
         ),
+        obscureText: obscureText,
+        validator: validator,
       ),
-      obscureText: obscureText,
-      validator: validator,
     );
   }
 }
