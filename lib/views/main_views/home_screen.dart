@@ -108,13 +108,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 0,
                 ),
-                Text(
-                  "Recent Jobs",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "poppins",
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Recent Jobs",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "poppins",
+                      ),
+                    ),
+                    Text(
+                      "See All",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 15,

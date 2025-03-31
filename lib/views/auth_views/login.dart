@@ -69,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                 key: _formKey,
                 child: Column(
                   children: [
-                    ReusableInput(
+                    CustomInput(
                       controller: _emailController,
                       labelText: 'Email',
                       icon: Icons.email,
@@ -85,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 16),
-                    ReusableInput(
+                    CustomInput(
                       controller: _passwordController,
                       labelText: 'Password',
                       icon: Icons.lock,

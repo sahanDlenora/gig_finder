@@ -75,7 +75,7 @@ class _JobCardState extends State<JobCard> {
                   child: Center(
                     child: Icon(
                       Icons.bookmark,
-                      color: Colors.green,
+                      color: Colors.grey,
                     ),
                   ),
                 ),
@@ -158,39 +158,6 @@ class _JobCardState extends State<JobCard> {
             SizedBox(
               height: 8,
             ),
-            /*Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey, // Button color
-                    foregroundColor: Colors.white, // Text color
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ), // Padding
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(20)), // Rounded corners
-                  ),
-                  child: Text("Details"),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green, // Button color
-                    foregroundColor: Colors.white, // Text color
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ), // Padding
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(20)), // Rounded corners
-                  ),
-                  child: Text("Apply"),
-                ),
-              ],
-            ),*/
           ],
         ),
       ),

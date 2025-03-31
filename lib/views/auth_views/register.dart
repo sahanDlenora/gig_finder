@@ -135,7 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      ReusableInput(
+                      CustomInput(
                         controller: _nameController,
                         labelText: 'Name',
                         icon: Icons.person,
@@ -148,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      ReusableInput(
+                      CustomInput(
                         controller: _emailController,
                         labelText: 'Email',
                         icon: Icons.email,
@@ -164,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      ReusableInput(
+                      CustomInput(
                         controller: _contactNumController,
                         labelText: 'Contact Number',
                         icon: Icons.work,
@@ -177,7 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      ReusableInput(
+                      CustomInput(
                         controller: _passwordController,
                         labelText: 'Password',
                         icon: Icons.lock,
@@ -193,7 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      ReusableInput(
+                      CustomInput(
                         controller: _confirmPasswordController,
                         labelText: 'Confirm Password',
                         icon: Icons.lock,
