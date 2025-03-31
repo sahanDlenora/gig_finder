@@ -40,11 +40,10 @@ class UserService {
     }
   }
 
-<<<<<<< Updated upstream
+
+
   //get user details by id
-=======
-   //get user details by id
->>>>>>> Stashed changes
+
   Future<UserModel?> getUserById(String userId) async {
     try {
       final doc = await _usersCollection.doc(userId).get();
@@ -56,9 +55,5 @@ class UserService {
     }
     return null;
   }
-<<<<<<< Updated upstream
 
-=======
-  
->>>>>>> Stashed changes
 }

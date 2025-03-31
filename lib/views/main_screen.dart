@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gig_finder/views/main_views/add_screen.dart';
-import 'package:gig_finder/views/main_views/favourite_screen.dart';
+import 'package:gig_finder/views/main_views/job_screen.dart';
+import 'package:gig_finder/views/main_views/message_screen.dart';
 import 'package:gig_finder/views/main_views/home_screen.dart';
 import 'package:gig_finder/views/main_views/profile_screen.dart';
 
@@ -12,16 +12,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-<<<<<<< Updated upstream
 
-  int _currentIndex = 0;
-=======
   int _currentIndex = 3;
->>>>>>> Stashed changes
+
 
   final List<Widget> _pages = [
     HomeScreen(),
-    AddScreen(),
+    JobScreen(),
     FavouriteScreen(),
     ProfileScreen(),
   ];
@@ -42,12 +39,12 @@ class _MainScreenState extends State<MainScreen> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: "Add",
+            icon: Icon(Icons.gamepad),
+            label: "Jobs",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.save),
-            label: "Save",
+            icon: Icon(Icons.message),
+            label: "Messages",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
