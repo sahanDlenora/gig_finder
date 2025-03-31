@@ -12,8 +12,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+<<<<<<< Updated upstream
 
   int _currentIndex = 0;
+=======
+  int _currentIndex = 3;
+>>>>>>> Stashed changes
 
   final List<Widget> _pages = [
     HomeScreen(),
