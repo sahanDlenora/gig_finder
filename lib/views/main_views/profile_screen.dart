@@ -1,127 +1,162 @@
 import 'package:flutter/material.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gig_finder/models/user_model.dart';
-import 'package:gig_finder/service/users/user_service.dart';
-import 'package:gig_finder/service/auth/auth_services.dart';
-import 'package:gig_finder/views/auth_views/login.dart'; // Import your login screen
-
-
 import 'package:gig_finder/widgets/reusable/profile_element.dart';
-
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
-
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  UserModel? _userModel;
-  bool _isLoading = true;
-
-
-  @override
-  void initState() {
-    super.initState();
-
-    _fetchUserData();
-  }
-
-  Future<void> _fetchUserData() async {
-    try {
-      User? user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        UserModel? fetchedUser = await UserService().getUserById(user.uid);
-        if (fetchedUser != null) {
-          setState(() {
-            _userModel = fetchedUser;
-          });
-        }
-      }
-    } catch (e) {
-      print("Error fetching user data: $e");
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  Future<void> _logout() async {
-    await AuthService().signOut();
-    // Navigate to login screen after logout
-    if (mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-
-    }
-  }
-
-  @override
-
   Widget build(BuildContext context) {
     return Scaffold(
-
-      appBar: AppBar(title: const Text("Profile")),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _userModel == null
-              ? const Center(child: Text("User not found"))
-              : Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 64,
-                        backgroundImage: _userModel!.profilePicture.isNotEmpty
-                            ? NetworkImage(_userModel!.profilePicture)
-                            : const NetworkImage(
-                                'https://i.stack.imgur.com/l60Hf.png'),
-                        backgroundColor: Colors.grey[300],
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        _userModel!.name,
-                        style: const TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        _userModel!.email,
-                        style:
-                            const TextStyle(fontSize: 18, color: Colors.grey),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "📞 ${_userModel!.contact}",
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: _logout,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          "Logout",
-                          style: TextStyle(fontSize: 18, color: Colors.white),
-                        ),
-                      ),
-                    ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 10,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Text(
+                    "Profile",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "poppins",
+                    ),
                   ),
                 ),
-
+                SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: Center(
+                            child: CircleAvatar(
+                              radius: 100,
+                              backgroundImage: AssetImage("assets/h.png"),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text(
+                          "Thilina Madhusanka",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'poppins',
+                            color: Colors.black.withOpacity(0.8),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  "My Account",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "poppins",
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                ProfileElement(
+                  profileElementName: "About Me",
+                  iconName: Icons.person,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                ProfileElement(
+                  profileElementName: "Education",
+                  iconName: Icons.cast_for_education,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                ProfileElement(
+                  profileElementName: "Skils",
+                  iconName: Icons.bubble_chart,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                ProfileElement(
+                  profileElementName: "Job Experiences",
+                  iconName: Icons.explore_rounded,
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  "General",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "poppins",
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                ProfileElement(
+                  profileElementName: "Settings",
+                  iconName: Icons.settings,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                ProfileElement(
+                  profileElementName: "Privacy Policy",
+                  iconName: Icons.security,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                ProfileElement(
+                  profileElementName: "Help Center",
+                  iconName: Icons.help,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                ProfileElement(
+                  profileElementName: "Log Out",
+                  iconName: Icons.logout,
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
