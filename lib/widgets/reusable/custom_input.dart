@@ -26,9 +26,6 @@ class CustomInput extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: TextFormField(
-        style: TextStyle(
-          color: Colors.amber,
-        ),
         controller: controller,
         decoration: InputDecoration(
           border: inputBorder,
@@ -40,6 +37,7 @@ class CustomInput extends StatelessWidget {
             fontSize: 14,
           ),
           filled: true,
+          fillColor: Colors.grey.shade100,
           prefixIcon: Icon(
             icon,
             color: mainWhiteColor,

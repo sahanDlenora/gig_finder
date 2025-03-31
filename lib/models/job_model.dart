@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Job {
   String id;
   String title;
@@ -23,17 +25,17 @@ class Job {
     required this.isUpdated,
   });
 
-  factory Job.fromJson(Map<String, dynamic> doc, String id) {
+  /*factory Job.fromJson(Map<String, dynamic> doc, String id) {
     Job(
       id: id,
-      title: title,
-      description: description,
-      location: location,
-      foods: foods,
-      salary: salary,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      isUpdated: isUpdated,
+      title: doc["title"],
+      description: doc["description"],
+      location: doc["location"],
+      foods: doc["foods"],
+      salary: doc["salary"],
+      createdAt: (doc["createdAt"] as Timestamp).toDate(),
+      updatedAt: (doc["updatedAt"] as Timestamp).toDate(),
+      isUpdated: doc["isUpdated"],
     );
-  }
+  }*/
 }

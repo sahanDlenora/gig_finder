@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gig_finder/views/main_views/sub_pages/add_jobs.dart';
+import 'package:gig_finder/widgets/reusable/add_job_input.dart';
 import 'package:gig_finder/widgets/reusable/custom_input.dart';
 import 'package:gig_finder/widgets/reusable/job_card.dart';
 
@@ -17,9 +19,6 @@ class JobScreen extends StatefulWidget {
 }
 
 class _JobScreenState extends State<JobScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -62,49 +61,7 @@ class _JobScreenState extends State<JobScreen> {
           ),
           body: TabBarView(
             children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 15,
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Add Jobs",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Job Title"),
-                                CustomInput(
-                                  controller: _nameController,
-                                  labelText: 'Contact Number',
-                                  icon: Icons.work,
-                                  obscureText: false,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your contact number';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              AddJobs(),
               SingleChildScrollView(
                 child: Column(
                   children: [
