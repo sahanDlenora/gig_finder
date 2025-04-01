@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
+                        borderSide: BorderSide(color: Colors.green.shade100),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
