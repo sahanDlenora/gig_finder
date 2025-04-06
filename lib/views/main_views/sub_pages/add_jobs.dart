@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gig_finder/widgets/reusable/add_job_input.dart';
+import 'package:gig_finder/widgets/reusable/custom_button.dart';
 
 class AddJobs extends StatelessWidget {
   AddJobs({super.key});
@@ -10,6 +11,14 @@ class AddJobs extends StatelessWidget {
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _foodsController = TextEditingController();
   final TextEditingController _salaryController = TextEditingController();
+
+  void _submitForm(BuildContext context) async {
+    //save form
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
+      print(_titleController.text);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +159,14 @@ class AddJobs extends StatelessWidget {
                               }
                               return null;
                             },
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          CustomButton(
+                            text: "Add Job",
+                            buttonBgColor: Colors.green,
+                            onPressed: () => _submitForm(context),
                           ),
                         ],
                       ),

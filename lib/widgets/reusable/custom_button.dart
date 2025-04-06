@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:gig_finder/utils/constants/colors.dart';
 
-class ReusableButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final String text;
-  final double width;
+  final Color buttonBgColor;
+  //final double width;
   final VoidCallback onPressed;
 
-  const ReusableButton({
+  const CustomButton({
     super.key,
     required this.text,
     required this.onPressed,
-    required this.width,
+    required this.buttonBgColor,
+    //required this.width,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return /*Container(
       width: width,
       height: 50,
       decoration: BoxDecoration(
@@ -36,6 +38,28 @@ class ReusableButton extends StatelessWidget {
             fontSize: 16,
             color: mainWhiteColor,
           ),
+        ),
+      ),
+    );*/
+        ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 20,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        elevation: 0,
+        backgroundColor: buttonBgColor,
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
         ),
       ),
     );

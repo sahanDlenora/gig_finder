@@ -101,9 +101,10 @@ class LoginScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 24),
-                    ReusableButton(
+                    CustomButton(
                       text: 'Log in',
-                      width: MediaQuery.of(context).size.width,
+                      buttonBgColor: Colors.green,
+                      //width: MediaQuery.of(context).size.width,
                       onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
                           await _signInWithEmailAndPassword(context);
@@ -121,9 +122,10 @@ class LoginScreen extends StatelessWidget {
 
                     const SizedBox(height: 10),
                     // Google Sign-In Button
-                    ReusableButton(
+                    CustomButton(
                       text: 'Sign in with Google',
-                      width: MediaQuery.of(context).size.width,
+                      buttonBgColor: Colors.grey,
+                      //width: MediaQuery.of(context).size.width,
                       onPressed: () => _signInWithGoogle(context),
                     ),
                     const SizedBox(height: 16),
