@@ -209,9 +209,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      ReusableButton(
+                      CustomButton(
                         text: 'Sign Up',
-                        width: MediaQuery.of(context).size.width,
+                        buttonBgColor: Colors.green,
+                        //width: MediaQuery.of(context).size.width,
                         onPressed: () async {
                           if (_formKey.currentState?.validate() ?? false) {
                             await _createUser(context);
