@@ -25,17 +25,17 @@ class Job {
     required this.isUpdated,
   });
 
-  /*factory Job.fromJson(Map<String, dynamic> doc, String id) {
-    Job(
-      id: id,
-      title: doc["title"],
-      description: doc["description"],
-      location: doc["location"],
-      foods: doc["foods"],
+  factory Job.fromJson(Map<String, dynamic> doc, String id) {
+    return Job(
+      id: doc["id"] ?? '',
+      title: doc["title"] ?? '',
+      description: doc["description"] ?? '',
+      location: doc["location"] ?? '',
+      foods: doc["foods"] ?? '',
       salary: doc["salary"],
       createdAt: (doc["createdAt"] as Timestamp).toDate(),
       updatedAt: (doc["updatedAt"] as Timestamp).toDate(),
       isUpdated: doc["isUpdated"],
     );
-  }*/
+  }
 }
