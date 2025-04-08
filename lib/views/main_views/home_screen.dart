@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gig_finder/models/job_model.dart';
+import 'package:gig_finder/service/job/job_service.dart';
 import 'package:gig_finder/widgets/reusable/job_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -133,14 +136,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 15,
                 ),
                 JobCard(),
+                //JobCard(),
                 SizedBox(
                   height: 18,
                 ),
-                JobCard(),
+                //JobCard(),
                 SizedBox(
                   height: 18,
                 ),
-                JobCard(),
+                //JobCard(),
                 SizedBox(
                   height: 18,
                 ),

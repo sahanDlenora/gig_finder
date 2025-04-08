@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gig_finder/models/job_model.dart';
+import 'package:gig_finder/service/job/job_service.dart';
+import 'package:gig_finder/utils/functions/functions.dart';
 import 'package:gig_finder/widgets/reusable/add_job_input.dart';
 import 'package:gig_finder/widgets/reusable/custom_button.dart';
+import 'package:go_router/go_router.dart';
 
 class AddJobs extends StatelessWidget {
   AddJobs({super.key});
@@ -16,7 +20,43 @@ class AddJobs extends StatelessWidget {
     //save form
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
-      print(_titleController.text);
+
+      // Add job to firestore or any other storage here
+      try {
+        // Create a new job
+        final DateTime now = DateTime.now();
+
+        final Job job = Job(
+          id: "",
+          title: _titleController.text,
+          description: _descriptionController.text,
+          location: _locationController.text,
+          foods: _foodsController.text,
+          salary: double.tryParse(_salaryController.text) ?? 0.0,
+          createdAt: now,
+          updatedAt: now,
+          isUpdated: false,
+        );
+        await JobService().createNewJob(job);
+
+        if (context.mounted) {
+          //Show success snackbar
+          UtilFunctions().showSnackBar(
+              context: context, message: "Job added successfully..!");
+        }
+        // Delay navigation to ensure snackbar is displayed
+        await Future.delayed(Duration(seconds: 2));
+
+        // Navigate to the home page
+        GoRouter.of(context).go("/main-screen");
+      } catch (error) {
+        print(error);
+        //Show success snackbar
+        if (context.mounted) {
+          UtilFunctions()
+              .showSnackBar(context: context, message: "Faild to add job..!");
+        }
+      }
     }
   }
 

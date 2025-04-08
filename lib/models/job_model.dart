@@ -8,7 +8,7 @@ class Job {
   String description;
   String location;
   String foods;
-  Double salary;
+  double salary;
   DateTime createdAt;
   DateTime updatedAt;
   bool isUpdated;
@@ -25,17 +25,31 @@ class Job {
     required this.isUpdated,
   });
 
-  factory Job.fromJson(Map<String, dynamic> doc, String id) {
+  factory Job.fromJson(Map<String, dynamic> json) {
     return Job(
-      id: doc["id"] ?? '',
-      title: doc["title"] ?? '',
-      description: doc["description"] ?? '',
-      location: doc["location"] ?? '',
-      foods: doc["foods"] ?? '',
-      salary: doc["salary"],
-      createdAt: (doc["createdAt"] as Timestamp).toDate(),
-      updatedAt: (doc["updatedAt"] as Timestamp).toDate(),
-      isUpdated: doc["isUpdated"],
+      id: json["id"] ?? '',
+      title: json["title"] ?? '',
+      description: json["description"] ?? '',
+      location: json["location"] ?? '',
+      foods: json["foods"] ?? '',
+      salary: json["salary"],
+      createdAt: (json["createdAt"] as Timestamp).toDate(),
+      updatedAt: (json["updatedAt"] as Timestamp).toDate(),
+      isUpdated: json["isUpdated"],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'location': location,
+      'foods': foods,
+      'salary': salary,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'isUpdated': isUpdated,
+    };
   }
 }

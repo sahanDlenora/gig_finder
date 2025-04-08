@@ -22,12 +22,14 @@ class LoginScreen extends StatelessWidget {
       // Sign in with Google
       await AuthService().signInWithGoogle();
 
-      UtilFunctions().showSnackBar(context, "User sign in Successfully..");
+      UtilFunctions().showSnackBar(
+          context: context, message: "User sign in Successfully..");
 
       GoRouter.of(context).go('/main-screen');
     } catch (e) {
       print('Error signing in with Google: $e');
-      UtilFunctions().showSnackBar(context, "Error signing in with Google: $e");
+      UtilFunctions().showSnackBar(
+          context: context, message: "Error signing in with Google: $e");
     }
   }
 
@@ -40,14 +42,16 @@ class LoginScreen extends StatelessWidget {
         password: _passwordController.text,
       );
 
-      UtilFunctions().showSnackBar(context, "User sign in Successfully..");
+      UtilFunctions().showSnackBar(
+          context: context, message: "User sign in Successfully..");
 
       GoRouter.of(context).go('/main-screen');
     } catch (e) {
       print('Error signing in with email and password: $e');
 
       UtilFunctions().showSnackBar(
-          context, "Error signing in with email and password: $e");
+          context: context,
+          message: "Error signing in with email and password: $e");
     }
   }
 
