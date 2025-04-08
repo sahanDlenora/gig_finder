@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gig_finder/models/user_model.dart';
@@ -9,6 +10,8 @@ import 'package:gig_finder/widgets/reusable/custom_button.dart';
 import 'package:gig_finder/widgets/reusable/custom_input.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -27,7 +30,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       TextEditingController();
   final TextEditingController _userTypeController = TextEditingController();
   final TextEditingController _aboutController = TextEditingController();
-  final TextEditingController _imageUrlController = TextEditingController();
 
   File? _imageFile;
 
@@ -42,17 +44,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  Future<String?> _uploadImageToCloudinary(File imageFile) async {
+  String cloudinaryUrl = "https://api.cloudinary.com/v1_1/dzvl2bdix/image/upload";
+  String uploadPreset = "profilepicpreset";
+
+  var request = http.MultipartRequest("POST", Uri.parse(cloudinaryUrl))
+    ..fields['upload_preset'] = uploadPreset
+    ..files.add(await http.MultipartFile.fromPath('file', imageFile.path));
+
+  var response = await request.send();
+
+  if (response.statusCode == 200) {
+    var responseData = await response.stream.bytesToString();
+    var jsonResponse = json.decode(responseData);
+    print("Cloudinary Response: $jsonResponse");  // Debugging
+    return jsonResponse['secure_url'];
+  } else {
+    var errorResponse = await response.stream.bytesToString();
+    print("Failed to upload image: $errorResponse");  // Debugging
+    return null;
+  }
+}
+
+
   // Sign up with email and password
   Future<void> _createUser(BuildContext context) async {
     try {
-      // Store the user image in storage and get the download URL
-      String profilePicture =
-          ""; // Default empty string if no image is uploaded
+      String? imageUrl;
       if (_imageFile != null) {
-        profilePicture = await UserProfileStorageService().uploadImage(
-          profileImage: _imageFile!,
-          userEmail: _emailController.text,
-        );
+        imageUrl = await _uploadImageToCloudinary(_imageFile!);
       }
 
       // Save user to Firestore
@@ -65,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               .text, // Assuming you have a contact controller
           userType: _userTypeController
               .text, // Assuming you have a userType controller
-          profilePicture: profilePicture,
+          profilePicture: imageUrl ?? "", // Store image URL in Firestore
           about: _aboutController.text, // Assuming you have an about controller
           rating: 0.0, // Default rating for a new user
           password: _passwordController.text,
