@@ -96,7 +96,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       // Show snackbar
       if (context.mounted) {
-        UtilFunctions().showSnackBar(context, "User created Successfully..");
+        UtilFunctions().showSnackBar(
+            context: context, message: "User created Successfully..");
       }
       // Navigate to the main screen
       GoRouter.of(context).go('/main-screen');
@@ -105,7 +106,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // Show snackbar with error message
       if (context.mounted) {
         UtilFunctions().showSnackBar(
-            context, "Error signing up with email and password: $e");
+            context: context,
+            message: "Error signing up with email and password: $e");
       }
     }
   }

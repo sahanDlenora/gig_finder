@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-class UtilFunctions{
-
+class UtilFunctions {
   // show snackbar
-  void showSnackBar(BuildContext context, String message){
+  void showSnackBar({required BuildContext context, required String message}) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message),
+      SnackBar(
+        content: Text(message),
+        duration: Duration(
+          seconds: 1,
+        ),
       ),
     );
   }
-
-
 }

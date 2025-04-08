@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           unselectedItemColor: Colors.grey,
         ),
         snackBarTheme: const SnackBarThemeData(
-          backgroundColor: mainOrangeColor,
+          backgroundColor: Color(0xff2a8a25),
           contentTextStyle: TextStyle(
             color: mainWhiteColor,
             fontSize: 16,
