@@ -24,12 +24,13 @@ class _JobCardState extends State<JobCard> {
             child: Text("Error : ${snapshot.error}"),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(
+          return Align(
+            alignment: Alignment.topCenter,
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height / 5,
-              ),
+              padding: const EdgeInsets.only(top: 25),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
                     "assets/a.png",

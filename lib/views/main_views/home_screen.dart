@@ -136,15 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 15,
                 ),
                 JobCard(),
-                //JobCard(),
-                SizedBox(
-                  height: 18,
-                ),
-                //JobCard(),
-                SizedBox(
-                  height: 18,
-                ),
-                //JobCard(),
                 SizedBox(
                   height: 18,
                 ),
