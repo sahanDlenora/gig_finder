@@ -57,6 +57,11 @@ class RouterClass {
           return MainScreen();
         },
       ),
+
+      //Job details page
+      GoRoute(
+        path: "/job-details",
+      ),
     ],
   );
 }

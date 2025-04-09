@@ -77,14 +77,6 @@ class _JobScreenState extends State<JobScreen> {
                             SizedBox(
                               height: 18,
                             ),
-                            JobCard(),
-                            SizedBox(
-                              height: 18,
-                            ),
-                            JobCard(),
-                            SizedBox(
-                              height: 18,
-                            ),
                           ],
                         ),
                       ),
