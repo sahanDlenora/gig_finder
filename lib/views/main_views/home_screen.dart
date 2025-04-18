@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
@@ -68,19 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Find Your Perfect Part Time Job",
-                  style: TextStyle(
-                    fontSize: 27,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins',
-                    height: 1.3,
-                  ),
-                ),
-                SizedBox(
-                  height: 0,
+                  height: 2,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
@@ -105,11 +94,76 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide.none,
                       ),
+                      contentPadding: EdgeInsets.symmetric(vertical: 12),
                     ),
                   ),
                 ),
                 SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  "Find Your Perfect Part Time Job",
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins',
+                    height: 1.3,
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
                   height: 0,
+                ),
+                /*SizedBox(
+                  height: 130,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Opacity(
+                      opacity: 0.75,
+                      child: Image.asset(
+                        "assets/z.jpg",
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),*/
+                CarouselSlider(
+                  options: CarouselOptions(
+                    height: 130,
+                    autoPlay: true,
+                    enlargeCenterPage: true,
+                    viewportFraction: 0.95,
+                    enableInfiniteScroll: true,
+                    aspectRatio: 2,
+                    //padEnds: false,
+                  ),
+                  items: [
+                    "assets/x.jpg",
+                    "assets/r.jpg",
+                    "assets/b.jpg",
+                  ].map((path) {
+                    return Builder(
+                      builder: (context) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Opacity(
+                            opacity: 0.75,
+                            child: Image.asset(
+                              path,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }).toList(),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
