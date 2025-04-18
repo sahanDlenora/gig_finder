@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gig_finder/service/job/job_service.dart';
 import 'package:gig_finder/widgets/reusable/custom_button.dart';
+import 'package:go_router/go_router.dart';
 
 class JobCard extends StatefulWidget {
   const JobCard({super.key});
@@ -170,25 +171,39 @@ class _JobCardState extends State<JobCard> {
                             ),
                             Row(
                               children: [
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(100),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    GoRouter.of(context).push("/job-details");
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    backgroundColor: Colors.transparent,
+                                    shadowColor: Colors.transparent,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100)),
                                   ),
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.document_scanner_outlined,
-                                      color: Colors.grey,
+                                  child: Container(
+                                    width: 40,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.document_scanner_outlined,
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 8,
+                                  width: 0,
                                 ),
                                 Container(
-                                  width: 30,
+                                  width: 40,
                                   height: 30,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
@@ -206,7 +221,7 @@ class _JobCardState extends State<JobCard> {
                           ],
                         ),
                         SizedBox(
-                          height: 8,
+                          height: 2,
                         ),
                       ],
                     ),
