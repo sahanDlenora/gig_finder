@@ -173,7 +173,10 @@ class _JobCardState extends State<JobCard> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    GoRouter.of(context).push("/job-details");
+                                    GoRouter.of(context).push(
+                                      "/job-details",
+                                      extra: job,
+                                    );
                                   },
                                   style: ElevatedButton.styleFrom(
                                     padding: EdgeInsets.zero,

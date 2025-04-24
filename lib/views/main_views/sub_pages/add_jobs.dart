@@ -14,6 +14,7 @@ class AddJobs extends StatelessWidget {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _foodsController = TextEditingController();
+  final TextEditingController _workTimeController = TextEditingController();
   final TextEditingController _salaryController = TextEditingController();
 
   void _submitForm(BuildContext context) async {
@@ -32,6 +33,7 @@ class AddJobs extends StatelessWidget {
           description: _descriptionController.text,
           location: _locationController.text,
           foods: _foodsController.text,
+          workTime: _workTimeController.text,
           salary: double.tryParse(_salaryController.text) ?? 0.0,
           createdAt: now,
           updatedAt: now,
@@ -172,6 +174,30 @@ class AddJobs extends StatelessWidget {
                             validator: (value) {
                               if (value?.isEmpty ?? true) {
                                 return "Please enter foods";
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                            "Time",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          AddJobInput(
+                            controller: _workTimeController,
+                            lableText: "Enter work time",
+                            validator: (value) {
+                              if (value?.isEmpty ?? true) {
+                                return "Please enter work time";
                               }
                               return null;
                             },

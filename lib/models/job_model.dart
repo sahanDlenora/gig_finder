@@ -8,7 +8,9 @@ class Job {
   String description;
   String location;
   String foods;
+  String workTime;
   double salary;
+
   DateTime createdAt;
   DateTime updatedAt;
   bool isUpdated;
@@ -19,6 +21,7 @@ class Job {
     required this.description,
     required this.location,
     required this.foods,
+    required this.workTime,
     required this.salary,
     required this.createdAt,
     required this.updatedAt,
@@ -32,6 +35,7 @@ class Job {
       description: json["description"] ?? '',
       location: json["location"] ?? '',
       foods: json["foods"] ?? '',
+      workTime: json["workTime"] ?? '',
       salary: json["salary"],
       createdAt: (json["createdAt"] as Timestamp).toDate(),
       updatedAt: (json["updatedAt"] as Timestamp).toDate(),
@@ -46,6 +50,7 @@ class Job {
       'description': description,
       'location': location,
       'foods': foods,
+      'workTime': workTime,
       'salary': salary,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
