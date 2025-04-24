@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gig_finder/models/job_model.dart';
 import 'package:gig_finder/views/auth_views/login.dart';
 import 'package:gig_finder/views/auth_views/register.dart';
 import 'package:gig_finder/views/main_screen.dart';
@@ -65,7 +66,10 @@ class RouterClass {
         path: "/job-details",
         name: "job-details",
         builder: (context, state) {
-          return JobDetails();
+          final Job job = state.extra as Job;
+          return JobDetails(
+            job: job,
+          );
         },
       ),
     ],
