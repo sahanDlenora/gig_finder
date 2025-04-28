@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gig_finder/service/job/job_service.dart';
-import 'package:gig_finder/widgets/reusable/custom_button.dart';
-import 'package:go_router/go_router.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class JobCard extends StatefulWidget {
   const JobCard({super.key});
@@ -11,19 +10,39 @@ class JobCard extends StatefulWidget {
 }
 
 class _JobCardState extends State<JobCard> {
+  Future<Map<String, dynamic>?> getUserById(String userId) async {
+    final doc =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    if (doc.exists) return doc.data();
+    return null;
+  }
+
+  String getTimeAgo(DateTime dateTime) {
+    final now = DateTime.now();
+    final difference = now.difference(dateTime);
+
+    if (difference.inSeconds < 60) {
+      return 'Just now';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} hours ago';
+    } else if (difference.inDays < 7) {
+      return '${difference.inDays} days ago';
+    } else {
+      return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: JobService().jobs,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(
-            child: Text("Error : ${snapshot.error}"),
-          );
+          return Center(child: Text("Error : ${snapshot.error}"));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return Align(
             alignment: Alignment.topCenter,
@@ -33,19 +52,11 @@ class _JobCardState extends State<JobCard> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    "assets/a.png",
-                    width: 200,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
+                  Image.asset("assets/a.png", width: 200),
+                  const SizedBox(height: 10),
+                  const Text(
                     "No jobs available. Feel free to add a job",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 13,
-                    ),
+                    style: TextStyle(color: Colors.grey, fontSize: 13),
                   ),
                 ],
               ),
@@ -55,186 +66,143 @@ class _JobCardState extends State<JobCard> {
           final jobs = snapshot.data!;
           return ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: jobs.length,
             itemBuilder: (context, index) {
               final job = jobs[index];
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+              return FutureBuilder<Map<String, dynamic>?>(
+                future: getUserById(job.createdBy),
+                builder: (context, userSnapshot) {
+                  final userData = userSnapshot.data;
+                  final userName = userData?['name'] ?? 'Unknown';
+                  final profileUrl = userData?['profilePicture']; // FIXED HERE
+
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  child: Center(
-                                    child: CircleAvatar(
-                                      radius: 100,
-                                      backgroundImage:
-                                          AssetImage("assets/n.png"),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Text(
-                                      "Madhusanka",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                    CircleAvatar(
+                                      radius: 15,
+                                      backgroundImage: profileUrl != null &&
+                                              profileUrl.isNotEmpty
+                                          ? NetworkImage(profileUrl)
+                                          : const AssetImage("assets/n.png")
+                                              as ImageProvider,
                                     ),
-                                    Text(
-                                      "2 days ago",
-                                      style: TextStyle(
-                                        fontSize: 8,
-                                        color: Colors.grey.shade600,
-                                      ),
+                                    const SizedBox(width: 8),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userName,
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Text(
+                                          getTimeAgo(job.createdAt),
+                                          style: TextStyle(
+                                            fontSize: 8,
+                                            color: Colors.grey.shade600,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.bookmark,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          job.title,
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Location - ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(job.location),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Payment - Rs ${job.salary}",
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.green.shade400,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    GoRouter.of(context).push(
-                                      "/job-details",
-                                      extra: job,
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.zero,
-                                    backgroundColor: Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100)),
-                                  ),
-                                  child: Container(
-                                    width: 40,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.document_scanner_outlined,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 0,
-                                ),
                                 Container(
-                                  width: 40,
+                                  width: 30,
                                   height: 30,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.upload_outlined,
-                                      color: Colors.green,
-                                    ),
+                                  child: const Center(
+                                    child: Icon(Icons.bookmark,
+                                        color: Colors.grey),
                                   ),
                                 ),
                               ],
                             ),
+                            const SizedBox(height: 8),
+                            Text(
+                              job.title,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Text("Location - ",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600)),
+                                Text(job.location),
+                              ],
+                            ),
+                            const SizedBox(height: 6),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Payment - Rs ${job.salary}",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.green.shade400,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    _iconContainer(
+                                        Icons.document_scanner_outlined,
+                                        Colors.grey),
+                                    const SizedBox(width: 8),
+                                    _iconContainer(
+                                        Icons.upload_outlined, Colors.green),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
                           ],
                         ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                },
               );
             },
           );
         }
       },
+    );
+  }
+
+  Widget _iconContainer(IconData icon, Color color) {
+    return Container(
+      width: 30,
+      height: 30,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: Center(child: Icon(icon, color: color)),
     );
   }
 }
