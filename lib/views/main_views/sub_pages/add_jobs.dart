@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
+import 'package:gig_finder/service/auth/auth_services.dart';
 import 'package:gig_finder/service/job/job_service.dart';
 import 'package:gig_finder/utils/functions/functions.dart';
 import 'package:gig_finder/widgets/reusable/add_job_input.dart';
@@ -27,6 +28,13 @@ class AddJobs extends StatelessWidget {
         // Create a new job
         final DateTime now = DateTime.now();
 
+        // Get the current logged-in user
+      final user = AuthService().getCurrentUser();
+      if (user == null) {
+        UtilFunctions().showSnackBar(context: context, message: "User not logged in!");
+        return;
+      }
+
         final Job job = Job(
           id: "",
           title: _titleController.text,
@@ -35,9 +43,10 @@ class AddJobs extends StatelessWidget {
           foods: _foodsController.text,
           workTime: _workTimeController.text,
           salary: double.tryParse(_salaryController.text) ?? 0.0,
-          createdAt: now,
-          updatedAt: now,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
           isUpdated: false,
+          createdBy: user.uid,
         );
         await JobService().createNewJob(job);
 
