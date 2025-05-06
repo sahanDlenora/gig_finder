@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
+import 'package:gig_finder/views/main_views/sub_pages/chat_page.dart';
 import 'package:gig_finder/widgets/reusable/custom_button.dart';
 import 'package:gig_finder/widgets/reusable/job_details_show.dart';
 
@@ -99,7 +100,22 @@ class _JobDetailsState extends State<JobDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     iconButton(Icons.call, Colors.red.shade300),
-                    iconButton(Icons.message, Colors.blue.shade200),
+                    GestureDetector(
+                      onTap: () {
+                        if (userData != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChatPage(
+                                receiverID: widget.job.createdBy,
+                                receiverName: userData!['name'],
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      child: iconButton(Icons.message, Colors.blue.shade200),
+                    ),
                     iconButton(Icons.bookmark, Colors.grey),
                   ],
                 ),
@@ -115,17 +131,24 @@ class _JobDetailsState extends State<JobDetails> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        JobDetailsShow(txt_1: "Job Title", txt_2: widget.job.title),
+                        JobDetailsShow(
+                            txt_1: "Job Title", txt_2: widget.job.title),
                         const SizedBox(height: 10),
-                        JobDetailsShow(txt_1: "Description", txt_2: widget.job.description),
+                        JobDetailsShow(
+                            txt_1: "Description",
+                            txt_2: widget.job.description),
                         const SizedBox(height: 10),
-                        JobDetailsShow(txt_1: "Location", txt_2: widget.job.location),
+                        JobDetailsShow(
+                            txt_1: "Location", txt_2: widget.job.location),
                         const SizedBox(height: 10),
                         JobDetailsShow(txt_1: "Foods", txt_2: widget.job.foods),
                         const SizedBox(height: 10),
-                        JobDetailsShow(txt_1: "Time", txt_2: widget.job.workTime),
+                        JobDetailsShow(
+                            txt_1: "Time", txt_2: widget.job.workTime),
                         const SizedBox(height: 10),
-                        JobDetailsShow(txt_1: "Salary", txt_2: widget.job.salary.toString()),
+                        JobDetailsShow(
+                            txt_1: "Salary",
+                            txt_2: widget.job.salary.toString()),
                         const SizedBox(height: 12),
                         Center(
                           child: CustomButton(
