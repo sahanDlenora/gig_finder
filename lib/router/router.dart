@@ -28,13 +28,13 @@ class RouterClass {
       //initial Route (Responsive Layout)
       GoRoute(
         name: "start",
-        path: "/",
+        path: "/start",
         builder: (context, state) {
           return Start();
         },
       ),
       GoRoute(
-        path: "/nav_layout",
+        path: "/",
         name: "nav_layout",
         builder: (context, state) {
           return const ResponsiveLayoutScreen(

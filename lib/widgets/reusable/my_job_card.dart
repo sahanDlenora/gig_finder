@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
 import 'package:gig_finder/service/job/job_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gig_finder/views/main_views/sub_pages/updateJobDetails.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart';
 
 class MyJobCard extends StatefulWidget {
   const MyJobCard({
@@ -132,6 +134,7 @@ class _MyJobCardState extends State<MyJobCard> {
                                   ],
                                 ),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Container(
                                       width: 30,
@@ -152,24 +155,58 @@ class _MyJobCardState extends State<MyJobCard> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                      child: IconButton(
-                                        padding: EdgeInsets.zero,
-                                        constraints: BoxConstraints(),
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.bookmark,
-                                          color: Colors.grey,
-                                          size: 22,
-                                        ),
-                                      ),
+                                    PopupMenuButton(
+                                      iconColor: Colors.grey,
+                                      onSelected: (value) async {
+                                        if (value == "1") {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Updatejobdetails(),
+                                            ),
+                                          );
+                                        } else if (value == "2") {
+                                          //delete job from firestore
+                                          try {
+                                            await FirebaseFirestore.instance
+                                                .collection("jobs")
+                                                .doc(job.id)
+                                                .delete();
+                                          } catch (e) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    'Failed to delete job'),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                        ;
+                                      },
+                                      itemBuilder: (BuildContext context) {
+                                        return [
+                                          PopupMenuItem(
+                                            value: "1",
+                                            child: Text(
+                                              "Update",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                          PopupMenuItem(
+                                            value: "2",
+                                            child: Text(
+                                              "Delete",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                        ];
+                                      },
                                     ),
                                   ],
                                 ),
