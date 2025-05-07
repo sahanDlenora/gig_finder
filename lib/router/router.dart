@@ -86,7 +86,7 @@ class RouterClass {
       GoRoute(
         name: "about-me",
         path: "/about-me",
-        builder: (context, state) =>  EditProfileScreen(),
+        builder: (context, state) => EditProfileScreen(),
       ),
     ],
   );
