@@ -27,7 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _fetchCurrentUser() async {
     final user = _authService.getCurrentUser();
     if (user != null) {
-      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
       if (doc.exists) {
         setState(() {
           _currentUser = UserModel.fromJson(doc.data()!);
@@ -47,7 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -63,7 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child: ClipOval(
-                              child: _currentUser?.profilePicture != null && _currentUser!.profilePicture.isNotEmpty
+                              child: _currentUser?.profilePicture != null &&
+                                      _currentUser!.profilePicture.isNotEmpty
                                   ? Image.network(
                                       _currentUser!.profilePicture,
                                       fit: BoxFit.cover,
@@ -107,7 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             hintStyle: TextStyle(color: Colors.grey),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Colors.green.shade100),
+                              borderSide:
+                                  BorderSide(color: Colors.green.shade100),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
