@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gig_finder/models/job_model.dart';
 
 class UserModel {
   String userId;
@@ -61,4 +62,6 @@ class UserModel {
       updatedAt: (data['updatedAt'] as Timestamp).toDate(),
     );
   }
+
+  //Methods
 }

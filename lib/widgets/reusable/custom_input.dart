@@ -7,6 +7,7 @@ class CustomInput extends StatelessWidget {
   final IconData icon;
   final bool obscureText;
   final String? Function(String?) validator;
+  final Widget? suffixIcon;
 
   const CustomInput({
     super.key,
@@ -15,16 +16,17 @@ class CustomInput extends StatelessWidget {
     required this.icon,
     required this.obscureText,
     required this.validator,
+    this.suffixIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     final inputBorder = OutlineInputBorder(
       borderSide: Divider.createBorderSide(context),
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(12),
     );
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 1),
       child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
@@ -37,12 +39,13 @@ class CustomInput extends StatelessWidget {
             fontSize: 14,
           ),
           filled: true,
-          fillColor: Colors.grey.shade100,
+          fillColor: Colors.white,
           prefixIcon: Icon(
             icon,
-            color: mainWhiteColor,
+            color: Colors.grey,
             size: 20,
           ),
+          suffixIcon: suffixIcon,
         ),
         obscureText: obscureText,
         validator: validator,

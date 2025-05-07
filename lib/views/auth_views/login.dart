@@ -7,6 +7,7 @@ import 'package:gig_finder/utils/constants/colors.dart';
 import 'package:gig_finder/utils/functions/functions.dart';
 import 'package:gig_finder/widgets/reusable/custom_button.dart';
 import 'package:gig_finder/widgets/reusable/custom_input.dart';
+import 'package:gig_finder/widgets/reusable/mediaIcon.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -58,24 +59,40 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Image(
-                image: AssetImage('assets/Logo.png'),
-                height: 70,
+              const SizedBox(height: 40),
+              const Text(
+                'Welcome Back!',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 33,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+              const SizedBox(height: 10),
+              const Text(
+                'Fill your details or continue\nwith social media',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                  color: Colors.black54,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
                     CustomInput(
                       controller: _emailController,
-                      labelText: 'Email',
+                      labelText: 'Email Address',
                       icon: Icons.email,
                       obscureText: false,
                       validator: (value) {
@@ -88,11 +105,15 @@ class LoginScreen extends StatelessWidget {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 20),
                     CustomInput(
                       controller: _passwordController,
                       labelText: 'Password',
                       icon: Icons.lock,
+                      suffixIcon: Icon(
+                        Icons.visibility_outlined,
+                        color: Colors.grey,
+                      ),
                       obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -104,47 +125,99 @@ class LoginScreen extends StatelessWidget {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 24),
-                    CustomButton(
-                      text: 'Log in',
-                      buttonBgColor: Colors.green,
-                      //width: MediaQuery.of(context).size.width,
-                      onPressed: () async {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          await _signInWithEmailAndPassword(context);
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 30),
-                    Text(
-                      "Sign in with Google to access the app's features",
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: mainWhiteColor.withOpacity(0.6),
-                      ),
-                    ),
-
-                    const SizedBox(height: 10),
-                    // Google Sign-In Button
-                    CustomButton(
-                      text: 'Sign in with Google',
-                      buttonBgColor: Colors.grey,
-                      //width: MediaQuery.of(context).size.width,
-                      onPressed: () => _signInWithGoogle(context),
-                    ),
-                    const SizedBox(height: 16),
-                    TextButton(
-                      onPressed: () {
-                        // Navigate to signup screen
-                        GoRouter.of(context).go('/register');
-                      },
-                      child: const Text(
-                        'Don\'t have an account? Sign up',
-                        style: TextStyle(
-                          color: mainWhiteColor,
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Forgot password ?',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState?.validate() ?? false) {
+                            await _signInWithEmailAndPassword(context);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text(
+                          'Log In',
+                          style: TextStyle(
+                            //fontFamily: 'Poppins',
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      children: [
+                        const Expanded(child: Divider(thickness: 1)),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text('Or continue with'),
+                        ),
+                        const Expanded(child: Divider(thickness: 1)),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            child: MediaIcon(socialImg: "assets/google.png"),
+                            onTap: () => _signInWithGoogle(context),
+                          ),
+                          SizedBox(
+                            width: 12,
+                          ),
+                          MediaIcon(socialImg: "assets/facebook.png"),
+                          SizedBox(
+                            width: 12,
+                          ),
+                          MediaIcon(socialImg: "assets/instegram.png"),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Don\'t have an account?'),
+                        GestureDetector(
+                          onTap: () {
+                            GoRouter.of(context).push('/register');
+                          },
+                          child: const Text(
+                            ' Sign up',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

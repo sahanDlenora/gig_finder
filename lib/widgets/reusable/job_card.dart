@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gig_finder/models/job_model.dart';
 import 'package:gig_finder/service/job/job_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_router/go_router.dart';
 
 class JobCard extends StatefulWidget {
-  const JobCard({super.key});
+  const JobCard({
+    super.key,
+  });
 
   @override
   State<JobCard> createState() => _JobCardState();
@@ -135,9 +138,15 @@ class _JobCardState extends State<JobCard> {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child: const Center(
-                                    child: Icon(Icons.bookmark,
-                                        color: Colors.grey),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    constraints: BoxConstraints(),
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.bookmark,
+                                      color: Colors.grey,
+                                      size: 22,
+                                    ),
                                   ),
                                 ),
                               ],
