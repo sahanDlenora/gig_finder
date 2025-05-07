@@ -4,16 +4,16 @@ import 'package:gig_finder/service/job/job_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_router/go_router.dart';
 
-class JobCard extends StatefulWidget {
-  const JobCard({
+class MyJobCard extends StatefulWidget {
+  const MyJobCard({
     super.key,
   });
 
   @override
-  State<JobCard> createState() => _JobCardState();
+  State<MyJobCard> createState() => _MyJobCardState();
 }
 
-class _JobCardState extends State<JobCard> {
+class _MyJobCardState extends State<MyJobCard> {
   Future<Map<String, dynamic>?> getUserById(String userId) async {
     final doc =
         await FirebaseFirestore.instance.collection('users').doc(userId).get();
@@ -131,23 +131,47 @@ class _JobCardState extends State<JobCard> {
                                     ),
                                   ],
                                 ),
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    constraints: BoxConstraints(),
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.bookmark,
-                                      color: Colors.grey,
-                                      size: 22,
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                      ),
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        constraints: BoxConstraints(),
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.bookmark,
+                                          color: Colors.grey,
+                                          size: 22,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                      ),
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        constraints: BoxConstraints(),
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.bookmark,
+                                          color: Colors.grey,
+                                          size: 22,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

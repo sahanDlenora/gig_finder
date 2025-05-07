@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
 import 'package:gig_finder/views/auth_views/login.dart';
 import 'package:gig_finder/views/auth_views/register.dart';
+import 'package:gig_finder/views/auth_views/start.dart';
 import 'package:gig_finder/views/main_screen.dart';
 import 'package:gig_finder/views/main_views/job_screen.dart';
 import 'package:gig_finder/views/main_views/sub_pages/job_details.dart';
@@ -25,7 +26,14 @@ class RouterClass {
     routes: [
       //initial Route (Responsive Layout)
       GoRoute(
+        name: "/start",
         path: "/",
+        builder: (context, state) {
+          return Start();
+        },
+      ),
+      GoRoute(
+        path: "/nav_layout",
         name: "nav_layout",
         builder: (context, state) {
           return const ResponsiveLayoutScreen(
