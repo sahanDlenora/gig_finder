@@ -5,7 +5,8 @@ import 'package:gig_finder/views/auth_views/register.dart';
 import 'package:gig_finder/views/auth_views/start.dart';
 import 'package:gig_finder/views/main_screen.dart';
 import 'package:gig_finder/views/main_views/job_screen.dart';
-import 'package:gig_finder/views/main_views/sub_pages/job_details.dart';
+import 'package:gig_finder/views/sub_pages/about_me.dart';
+import 'package:gig_finder/views/sub_pages/job_details.dart';
 import 'package:gig_finder/views/responsive/mobile_layout.dart';
 import 'package:gig_finder/views/responsive/responsive_layout.dart';
 import 'package:gig_finder/views/responsive/web_layout.dart';
@@ -79,6 +80,13 @@ class RouterClass {
             job: job,
           );
         },
+      ),
+
+      // About Me Page
+      GoRoute(
+        name: "about-me",
+        path: "/about-me",
+        builder: (context, state) =>  EditProfileScreen(),
       ),
     ],
   );

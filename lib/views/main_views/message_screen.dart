@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gig_finder/service/auth/auth_services.dart';
 import 'package:gig_finder/service/chat/chat_service.dart';
-import 'package:gig_finder/views/main_views/sub_pages/chat_page.dart';
+import 'package:gig_finder/views/sub_pages/chat_page.dart';
 import 'package:gig_finder/widgets/reusable/user_tile.dart';
 
 class MessageScreen extends StatelessWidget {

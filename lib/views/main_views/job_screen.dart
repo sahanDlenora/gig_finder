@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gig_finder/models/job_model.dart';
-import 'package:gig_finder/views/main_views/sub_pages/add_jobs.dart';
+
+import 'package:gig_finder/views/sub_pages/add_jobs.dart';
+
 import 'package:gig_finder/widgets/reusable/add_job_input.dart';
 import 'package:gig_finder/widgets/reusable/custom_input.dart';
 import 'package:gig_finder/widgets/reusable/job_card.dart';

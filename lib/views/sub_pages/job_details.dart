@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
-import 'package:gig_finder/views/main_views/sub_pages/chat_page.dart';
+import 'package:gig_finder/views/sub_pages/chat_page.dart';
 import 'package:gig_finder/widgets/reusable/custom_button.dart';
 import 'package:gig_finder/widgets/reusable/job_details_show.dart';
 

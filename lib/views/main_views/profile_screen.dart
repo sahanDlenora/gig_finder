@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gig_finder/service/auth/auth_services.dart';
 import 'package:gig_finder/views/auth_views/login.dart';
+import 'package:gig_finder/views/sub_pages/about_me.dart';
 import 'package:gig_finder/widgets/reusable/profile_element.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -14,7 +16,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String userName = "Loading...";
-  String profileImage = "assets/default_profile.png"; // Default image
+  String profileImage = "https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg"; // Default image
 
   @override
   void initState() {
@@ -25,30 +27,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void fetchUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      DocumentSnapshot userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
       if (userDoc.exists) {
         setState(() {
           userName = userDoc['name'] ?? "No Name";
           profileImage = userDoc['profilePicture'].isNotEmpty
               ? userDoc['profilePicture']
-              : "assets/default_profile.png";
+              : "https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg";
         });
       }
     }
   }
 
   void _logout(BuildContext context) async {
-    try {
-      await AuthService().signOut();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-    } catch (e) {
-      print("Error signing out: $e");
-    }
+  try {
+    await AuthService().signOut();
+    context.go('/login'); // Use the correct route name for your login screen
+  } catch (e) {
+    print("Error signing out: $e");
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +89,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         CircleAvatar(
                           radius: 30,
                           backgroundImage: profileImage.startsWith("http")
-                              ? NetworkImage(profileImage) // Firebase storage URL
+                              ? NetworkImage(
+                                  profileImage) // Firebase storage URL
                               : AssetImage(profileImage) as ImageProvider,
                         ),
                         SizedBox(width: 15),
@@ -112,26 +115,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 // My Account Section
                 Text("My Account",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, fontFamily: "poppins")),
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "poppins")),
                 SizedBox(height: 12),
-                ProfileElement(profileElementName: "About Me", iconName: Icons.person),
-                ProfileElement(profileElementName: "Education", iconName: Icons.cast_for_education),
-                ProfileElement(profileElementName: "Skills", iconName: Icons.bubble_chart),
-                ProfileElement(profileElementName: "Job Experiences", iconName: Icons.explore_rounded),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              EditProfileScreen()), // Replace with your actual widget
+                    );
+                  },
+                  child: ProfileElement(
+                    profileElementName: "About Me",
+                    iconName: Icons.person,
+                  ),
+                ),
+
+                ProfileElement(
+                    profileElementName: "Education",
+                    iconName: Icons.cast_for_education),
+                ProfileElement(
+                    profileElementName: "Skills", iconName: Icons.bubble_chart),
+                ProfileElement(
+                    profileElementName: "Job Experiences",
+                    iconName: Icons.explore_rounded),
                 SizedBox(height: 12),
 
                 // General Section
                 Text("General",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, fontFamily: "poppins")),
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "poppins")),
                 SizedBox(height: 12),
-                ProfileElement(profileElementName: "Settings", iconName: Icons.settings),
-                ProfileElement(profileElementName: "Privacy Policy", iconName: Icons.security),
-                ProfileElement(profileElementName: "Help Center", iconName: Icons.help),
+                ProfileElement(
+                    profileElementName: "Settings", iconName: Icons.settings),
+                ProfileElement(
+                    profileElementName: "Privacy Policy",
+                    iconName: Icons.security),
+                ProfileElement(
+                    profileElementName: "Help Center", iconName: Icons.help),
 
                 // Log Out Button with GestureDetector
                 GestureDetector(
                   onTap: () => _logout(context),
-                  child: ProfileElement(profileElementName: "Log Out", iconName: Icons.logout),
+                  child: ProfileElement(
+                      profileElementName: "Log Out", iconName: Icons.logout),
                 ),
 
                 SizedBox(height: 12),
