@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
 import 'package:gig_finder/service/job/job_service.dart';
@@ -42,6 +43,8 @@ class _MyJobCardState extends State<MyJobCard> {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final currentUserId = currentUser?.uid;
     return StreamBuilder(
       stream: JobService().jobs,
       builder: (context, snapshot) {
@@ -69,13 +72,39 @@ class _MyJobCardState extends State<MyJobCard> {
             ),
           );
         } else {
-          final jobs = snapshot.data!;
+          final allJobs = snapshot.data!;
+          final userJobs =
+              allJobs.where((job) => job.createdBy == currentUserId).toList();
+          if (userJobs.isEmpty) {
+            return Center(
+                child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Image.asset(
+                  "assets/kk.png",
+                  width: double.infinity,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  "You haven't posted any jobs yet.",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 13,
+                  ),
+                ),
+              ],
+            ));
+          }
           return ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: jobs.length,
+            itemCount: userJobs.length,
             itemBuilder: (context, index) {
-              final job = jobs[index];
+              final job = userJobs[index];
 
               return FutureBuilder<Map<String, dynamic>?>(
                 future: getUserById(job.createdBy),
