@@ -26,7 +26,7 @@ class RouterClass {
     routes: [
       //initial Route (Responsive Layout)
       GoRoute(
-        name: "/start",
+        name: "start",
         path: "/",
         builder: (context, state) {
           return Start();
@@ -53,7 +53,7 @@ class RouterClass {
 
       // login Page
       GoRoute(
-        name: "login",
+        name: "/login",
         path: "/login",
         builder: (context, state) {
           return LoginScreen();
