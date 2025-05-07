@@ -12,7 +12,6 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
-
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -45,27 +44,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<String?> _uploadImageToCloudinary(File imageFile) async {
-  String cloudinaryUrl = "https://api.cloudinary.com/v1_1/dzvl2bdix/image/upload";
-  String uploadPreset = "profilepicpreset";
+    String cloudinaryUrl =
+        "https://api.cloudinary.com/v1_1/dzvl2bdix/image/upload";
+    String uploadPreset = "profilepicpreset";
 
-  var request = http.MultipartRequest("POST", Uri.parse(cloudinaryUrl))
-    ..fields['upload_preset'] = uploadPreset
-    ..files.add(await http.MultipartFile.fromPath('file', imageFile.path));
+    var request = http.MultipartRequest("POST", Uri.parse(cloudinaryUrl))
+      ..fields['upload_preset'] = uploadPreset
+      ..files.add(await http.MultipartFile.fromPath('file', imageFile.path));
 
-  var response = await request.send();
+    var response = await request.send();
 
-  if (response.statusCode == 200) {
-    var responseData = await response.stream.bytesToString();
-    var jsonResponse = json.decode(responseData);
-    print("Cloudinary Response: $jsonResponse");  // Debugging
-    return jsonResponse['secure_url'];
-  } else {
-    var errorResponse = await response.stream.bytesToString();
-    print("Failed to upload image: $errorResponse");  // Debugging
-    return null;
+    if (response.statusCode == 200) {
+      var responseData = await response.stream.bytesToString();
+      var jsonResponse = json.decode(responseData);
+      print("Cloudinary Response: $jsonResponse"); // Debugging
+      return jsonResponse['secure_url'];
+    } else {
+      var errorResponse = await response.stream.bytesToString();
+      print("Failed to upload image: $errorResponse"); // Debugging
+      return null;
+    }
   }
-}
-
 
   // Sign up with email and password
   Future<void> _createUser(BuildContext context) async {
@@ -115,6 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
