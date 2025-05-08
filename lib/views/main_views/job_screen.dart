@@ -10,8 +10,7 @@ class JobScreen extends StatefulWidget {
   const JobScreen({super.key});
 
   static const List<Tab> myTabs = <Tab>[
-    Tab(text: 'Add Jobs'),
-    Tab(text: 'Available'),
+    Tab(text: 'My Jobs'),
     Tab(text: 'Apply'),
     Tab(text: 'Saved'),
   ];
@@ -63,7 +62,6 @@ class _JobScreenState extends State<JobScreen> {
           ),
           body: TabBarView(
             children: [
-              AddJobs(),
               SingleChildScrollView(
                 child: Column(
                   children: [
@@ -86,66 +84,21 @@ class _JobScreenState extends State<JobScreen> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: FutureBuilder<List<Job>>(
-                  future: JobService()
-                      .getJobsByUser(FirebaseAuth.instance.currentUser!.uid),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-
-                    if (snapshot.hasError) {
-                      return Center(child: Text('Error loading jobs'));
-                    }
-
-                    final jobs = snapshot.data;
-
-                    if (jobs == null || jobs.isEmpty) {
-                      return Center(
-                          child: Text('You have not posted any jobs.'));
-                    }
-
-                    return ListView.builder(
-                      itemCount: jobs.length,
-                      itemBuilder: (context, index) {
-                        final job = jobs[index];
-                        return Card(
-                          elevation: 3,
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 16),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(job.title,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold)),
-                                SizedBox(height: 8),
-                                Text(job.description),
-                                SizedBox(height: 12),
-                                Text('Applicants:',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600)),
-                                ApplicantsListWidget(jobId: job.id),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
+              Column(
+                children: [
+                  Center(
+                    child: Text(
+                      "Apply Jobs",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
               ),
               Column(
                 children: [
                   Center(
                     child: Text(
-                      "Add Jobs",
+                      "Saved Jobs",
                       style: TextStyle(fontSize: 18),
                     ),
                   ),

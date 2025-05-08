@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
 import 'package:gig_finder/models/user_model.dart';
 import 'package:gig_finder/service/auth/auth_services.dart';
+import 'package:gig_finder/views/main_views/profile_screen.dart';
+import 'package:gig_finder/views/main_views/sub_pages/notification.dart';
 import 'package:gig_finder/widgets/reusable/job_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -78,15 +80,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                   : Icon(Icons.person, color: Colors.white),
                             ),
                           ),
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: Center(
-                              child: Icon(Icons.notifications_none_outlined),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NotificationPage(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: Center(
+                                child: Icon(Icons.notifications_none_outlined),
+                              ),
                             ),
                           ),
                         ],

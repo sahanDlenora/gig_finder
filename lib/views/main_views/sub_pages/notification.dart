@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class Updatejobdetails extends StatefulWidget {
-  const Updatejobdetails({super.key});
+class NotificationPage extends StatefulWidget {
+  const NotificationPage({super.key});
 
   @override
-  State<Updatejobdetails> createState() => _UpdatejobdetailsState();
+  State<NotificationPage> createState() => _NotificationPageState();
 }
 
-class _UpdatejobdetailsState extends State<Updatejobdetails> {
+class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Update",
+          "Notification",
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,

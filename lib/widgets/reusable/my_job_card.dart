@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
 import 'package:gig_finder/service/job/job_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gig_finder/views/main_views/sub_pages/job_applicant.dart';
 import 'package:gig_finder/views/main_views/sub_pages/updateJobDetails.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
@@ -165,20 +166,26 @@ class _MyJobCardState extends State<MyJobCard> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                      child: IconButton(
-                                        padding: EdgeInsets.zero,
-                                        constraints: BoxConstraints(),
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.bookmark,
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                JobApplicant(),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                        ),
+                                        child: Icon(
+                                          Icons.book_online,
                                           color: Colors.grey,
                                           size: 22,
                                         ),

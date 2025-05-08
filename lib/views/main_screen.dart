@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gig_finder/views/main_views/add_job_screen.dart';
 import 'package:gig_finder/views/main_views/job_screen.dart';
 import 'package:gig_finder/views/main_views/message_screen.dart';
 import 'package:gig_finder/views/main_views/home_screen.dart';
@@ -12,11 +13,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 3;
+  int _currentIndex = 0;
 
   final List<Widget> _pages = [
     HomeScreen(),
     JobScreen(),
+    AddJobScreen(),
     MessageScreen(),
     ProfileScreen(),
   ];
@@ -39,6 +41,13 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.gamepad),
             label: "Jobs",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.add,
+              size: 30,
+            ),
+            label: "Add",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
