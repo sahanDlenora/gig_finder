@@ -29,11 +29,12 @@ class AddJobs extends StatelessWidget {
         final DateTime now = DateTime.now();
 
         // Get the current logged-in user
-      final user = AuthService().getCurrentUser();
-      if (user == null) {
-        UtilFunctions().showSnackBar(context: context, message: "User not logged in!");
-        return;
-      }
+        final user = AuthService().getCurrentUser();
+        if (user == null) {
+          UtilFunctions()
+              .showSnackBar(context: context, message: "User not logged in!");
+          return;
+        }
 
         final Job job = Job(
           id: "",
@@ -75,7 +76,6 @@ class AddJobs extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        color: Colors.white,
         child: Column(
           children: [
             Center(
