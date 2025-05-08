@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
+import 'package:gig_finder/service/job/JobApplicationService%20.dart';
 import 'package:gig_finder/views/sub_pages/chat_page.dart';
 import 'package:gig_finder/widgets/reusable/custom_button.dart';
 import 'package:gig_finder/widgets/reusable/job_details_show.dart';
@@ -153,7 +154,15 @@ class _JobDetailsState extends State<JobDetails> {
                         Center(
                           child: CustomButton(
                             text: "Apply Now",
-                            onPressed: () {},
+                            onPressed: () async {
+                              await JobApplicationService()
+                                  .applyToJob(widget.job.id);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text("You have applied to this job.")),
+                              );
+                            },
                             buttonBgColor: Colors.green,
                           ),
                         ),

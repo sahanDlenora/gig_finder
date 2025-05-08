@@ -36,4 +36,17 @@ class JobService {
       return Stream.empty();
     }
   }
+
+  Future<List<Job>> getJobsByUser(String userId) async {
+  try {
+    final snapshot = await jobCollection.where('createdBy', isEqualTo: userId).get();
+    return snapshot.docs
+        .map((doc) => Job.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
+  } catch (e) {
+    print("Error fetching user jobs: $e");
+    return [];
+  }
+}
+
 }
