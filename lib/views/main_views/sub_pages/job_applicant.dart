@@ -5,7 +5,9 @@ import 'package:gig_finder/service/job/job_service.dart';
 import 'package:gig_finder/widgets/reusable/ApplicantsListWidget.dart';
 
 class JobApplicant extends StatefulWidget {
-  const JobApplicant({super.key});
+  const JobApplicant({
+    super.key,
+  });
 
   @override
   State<JobApplicant> createState() => _JobApplicantState();

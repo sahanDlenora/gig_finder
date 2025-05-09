@@ -4,6 +4,7 @@ import 'package:gig_finder/views/auth_views/login.dart';
 import 'package:gig_finder/views/auth_views/register.dart';
 import 'package:gig_finder/views/auth_views/start.dart';
 import 'package:gig_finder/views/main_screen.dart';
+import 'package:gig_finder/views/main_views/home_screen.dart';
 import 'package:gig_finder/views/main_views/job_screen.dart';
 import 'package:gig_finder/views/sub_pages/about_me.dart';
 import 'package:gig_finder/views/sub_pages/job_details.dart';
