@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gig_finder/models/user_model.dart';
+import 'package:gig_finder/service/auth/auth_services.dart';
 import 'package:gig_finder/service/users/user_service.dart';
 import 'package:gig_finder/service/users/user_storage.dart';
 import 'package:gig_finder/utils/constants/colors.dart';
 import 'package:gig_finder/utils/functions/functions.dart';
 import 'package:gig_finder/widgets/reusable/custom_button.dart';
 import 'package:gig_finder/widgets/reusable/custom_input.dart';
+import 'package:gig_finder/widgets/reusable/mediaIcon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -31,6 +33,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _aboutController = TextEditingController();
 
   File? _imageFile;
+
+  // Sign in with Google
+  Future<void> _signInWithGoogle(BuildContext context) async {
+    try {
+      // Sign in with Google
+      await AuthService().signInWithGoogle();
+
+      UtilFunctions().showSnackBar(
+          context: context, message: "User sign in Successfully..");
+
+      GoRouter.of(context).go('/main-screen');
+    } catch (e) {
+      print('Error signing in with Google: $e');
+      UtilFunctions().showSnackBar(
+          context: context, message: "Error signing in with Google: $e");
+    }
+  }
 
   // Pick an image from the gallery or camera
   Future<void> _pickImage(ImageSource source) async {
@@ -122,12 +141,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 40),
-                const Image(
-                  image: AssetImage('assets/Logo.png'),
-                  height: 70,
+                const Text(
+                  'Register Account',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 33,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                const SizedBox(height: 10),
+                const Text(
+                  'Fill your details or continue\nwith social media',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 16,
+                    color: Colors.black54,
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.015),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -136,27 +168,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           _imageFile != null
                               ? CircleAvatar(
-                                  radius: 64,
+                                  radius: 45,
                                   backgroundImage: FileImage(_imageFile!),
-                                  backgroundColor: mainPurpleColor,
+                                  backgroundColor: Colors.grey,
                                 )
                               : const CircleAvatar(
-                                  radius: 64,
+                                  radius: 45,
                                   backgroundImage: NetworkImage(
                                       'https://i.stack.imgur.com/l60Hf.png'),
-                                  backgroundColor: mainPurpleColor,
+                                  backgroundColor: Colors.grey,
                                 ),
                           Positioned(
-                            bottom: -10,
-                            left: 80,
+                            bottom: -13,
+                            left: 50,
                             child: IconButton(
                               onPressed: () => _pickImage(ImageSource.gallery),
                               icon: const Icon(Icons.add_a_photo),
+                              iconSize: 19,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        "Add Your Profile picture",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 18),
                       CustomInput(
                         controller: _nameController,
                         labelText: 'Name',
@@ -230,28 +274,90 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
-                      CustomButton(
-                        text: 'Sign Up',
-                        buttonBgColor: Colors.green,
-                        //width: MediaQuery.of(context).size.width,
-                        onPressed: () async {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            await _createUser(context);
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 16),
-                      TextButton(
-                        onPressed: () {
-                          // Navigate to login screen
-                          GoRouter.of(context).go('/login');
-                        },
-                        child: const Text(
-                          'Already have an account? Log in',
-                          style: TextStyle(color: mainWhiteColor),
+                      SizedBox(height: 30),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              await _createUser(context);
+                              if (context.mounted) {
+                                GoRouter.of(context)
+                                    .go('/login'); // Navigate to login page
+                              }
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text(
+                            'Register',
+                            style: TextStyle(
+                              //fontFamily: 'Poppins',
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
+                      const SizedBox(height: 30),
+                      Row(
+                        children: [
+                          const Expanded(child: Divider(thickness: 1)),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text('Or continue with'),
+                          ),
+                          const Expanded(child: Divider(thickness: 1)),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              child: MediaIcon(socialImg: "assets/google.png"),
+                              onTap: () => _signInWithGoogle(context),
+                            ),
+                            SizedBox(
+                              width: 12,
+                            ),
+                            MediaIcon(socialImg: "assets/facebook.png"),
+                            SizedBox(
+                              width: 12,
+                            ),
+                            MediaIcon(socialImg: "assets/instegram.png"),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Already have an account?'),
+                          GestureDetector(
+                            onTap: () {
+                              GoRouter.of(context).push('/login');
+                            },
+                            child: const Text(
+                              ' Login',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
