@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
+import 'package:gig_finder/service/job/favouriteService.dart';
 import 'package:gig_finder/service/job/job_service.dart';
 import 'package:gig_finder/views/sub_pages/add_jobs.dart';
 import 'package:gig_finder/widgets/reusable/ApplicantsListWidget.dart';
 import 'package:gig_finder/widgets/reusable/my_job_card.dart';
+import 'package:gig_finder/widgets/reusable/single_job_card.dart';
 
 class JobScreen extends StatefulWidget {
   const JobScreen({super.key});
@@ -20,6 +22,7 @@ class JobScreen extends StatefulWidget {
 }
 
 class _JobScreenState extends State<JobScreen> {
+  final _favouriteService = FavouriteService();
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -96,10 +99,38 @@ class _JobScreenState extends State<JobScreen> {
               ),
               Column(
                 children: [
-                  Center(
-                    child: Text(
-                      "Saved Jobs",
-                      style: TextStyle(fontSize: 18),
+                  Expanded(
+                    child: StreamBuilder<List<Job>>(
+                      stream: _favouriteService.getFavouriteJobs(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
+                          return const Center(
+                            child: Text(
+                              "No saved jobs yet.",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        } else {
+                          final jobs = snapshot.data!;
+                          return ListView.builder(
+                            itemCount: jobs.length,
+                            padding: const EdgeInsets.all(16),
+                            itemBuilder: (context, index) {
+                              final job = jobs[index];
+                              return SingleJobCard(job: job);
+                            },
+                          );
+                        }
+                      },
                     ),
                   ),
                 ],
