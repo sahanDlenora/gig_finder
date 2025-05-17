@@ -17,6 +17,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   final AuthService _authService = AuthService();
   UserModel? _currentUser;
   bool _isLoading = true;
@@ -145,6 +154,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 16),
                         child: TextField(
+                          controller: _searchController,
+                          onChanged: (value) {
+                            setState(() {
+                              _searchQuery = value.trim().toLowerCase();
+                            });
+                          },
                           decoration: InputDecoration(
                             filled: true,
                             prefixIcon: Icon(Icons.search, color: Colors.grey),
@@ -245,7 +260,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       SizedBox(height: 15),
-                      JobCard(),
+                      JobCard(searchQuery: _searchQuery),
+
                       SizedBox(height: 18),
                     ],
                   ),

@@ -6,9 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_router/go_router.dart';
 
 class JobCard extends StatefulWidget {
-  const JobCard({
-    super.key,
-  });
+  final String searchQuery;
+  const JobCard({super.key, required this.searchQuery});
 
   @override
   State<JobCard> createState() => _JobCardState();
@@ -81,13 +80,31 @@ class _JobCardState extends State<JobCard> {
           );
         } else {
           final jobs = snapshot.data!;
+          final filteredJobs = widget.searchQuery.isEmpty
+              ? jobs
+              : jobs
+                  .where((job) =>
+                      job.title
+                          .toLowerCase()
+                          .contains(widget.searchQuery.toLowerCase()) ||
+                      job.description
+                          .toLowerCase()
+                          .contains(widget.searchQuery.toLowerCase()) ||
+                      job.location
+                          .toLowerCase()
+                          .contains(widget.searchQuery.toLowerCase()))
+                  .toList();
+
           return ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: jobs.length,
+            itemCount: filteredJobs.length,
             itemBuilder: (context, index) {
-              final job = jobs[index];
+
               _loadFavouriteStatus(job.id);
+
+              final job = filteredJobs[index];
+
 
               return FutureBuilder<Map<String, dynamic>?>(
                 future: getUserById(job.createdBy),

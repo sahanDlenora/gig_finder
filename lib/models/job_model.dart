@@ -10,7 +10,7 @@ class Job {
   String foods;
   String workTime;
   double salary;
-  String createdBy; // <-- Added this
+  String createdBy; 
   DateTime createdAt;
   DateTime updatedAt;
   bool isUpdated;
@@ -23,7 +23,7 @@ class Job {
     required this.foods,
     required this.workTime,
     required this.salary,
-    required this.createdBy, // <-- Added this
+    required this.createdBy, 
     required this.createdAt,
     required this.updatedAt,
     required this.isUpdated,
@@ -38,7 +38,7 @@ class Job {
       foods: json["foods"] ?? '',
       workTime: json["workTime"] ?? '',
       salary: (json["salary"] ?? 0).toDouble(),
-      createdBy: json["createdBy"] ?? '', // <-- Added this
+      createdBy: json["createdBy"] ?? '', 
       createdAt: (json["createdAt"] as Timestamp).toDate(),
       updatedAt: (json["updatedAt"] as Timestamp).toDate(),
       isUpdated: json["isUpdated"] ?? false,
@@ -54,7 +54,7 @@ class Job {
       'foods': foods,
       'workTime': workTime,
       'salary': salary,
-      'createdBy': createdBy, // <-- Added this
+      'createdBy': createdBy, 
       'createdAt': createdAt,
       'updatedAt': updatedAt,
       'isUpdated': isUpdated,

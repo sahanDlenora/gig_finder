@@ -1,10 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gig_finder/models/job_model.dart';
+
 import 'package:gig_finder/service/job/favouriteService.dart';
+
+import 'package:gig_finder/service/job/JobApplicationService%20.dart';
+
 import 'package:gig_finder/service/job/job_service.dart';
 import 'package:gig_finder/views/sub_pages/add_jobs.dart';
 import 'package:gig_finder/widgets/reusable/ApplicantsListWidget.dart';
+import 'package:gig_finder/widgets/reusable/apply_job_card.dart';
 import 'package:gig_finder/widgets/reusable/my_job_card.dart';
 import 'package:gig_finder/widgets/reusable/single_job_card.dart';
 
@@ -22,7 +27,18 @@ class JobScreen extends StatefulWidget {
 }
 
 class _JobScreenState extends State<JobScreen> {
+
   final _favouriteService = FavouriteService();
+
+  late Future<List<Job>> _appliedJobsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _appliedJobsFuture = JobApplicationService().getAppliedJobs();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -87,15 +103,34 @@ class _JobScreenState extends State<JobScreen> {
                   ],
                 ),
               ),
-              Column(
-                children: [
-                  Center(
-                    child: Text(
-                      "Apply Jobs",
-                      style: TextStyle(fontSize: 18),
+              FutureBuilder<List<Job>>(
+                future: _appliedJobsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                        child: Text('You have not applied to any jobs.'));
+                  }
+
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 10,
                     ),
-                  ),
-                ],
+                    child: ApplyJobListCard(
+                      jobs: snapshot.data!,
+                      onJobDeleted: () {
+                        setState(() {
+                          _appliedJobsFuture =
+                              JobApplicationService().getAppliedJobs();
+                        });
+                      },
+                    ),
+                  );
+                },
               ),
               Column(
                 children: [
