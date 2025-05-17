@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:gig_finder/models/job_model.dart';
+import 'package:gig_finder/service/job/favouriteService.dart';
+import 'package:gig_finder/widgets/reusable/single_job_card.dart';
 
-class NotificationPage extends StatefulWidget {
+class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
 
   @override
-  State<NotificationPage> createState() => _NotificationPageState();
-}
-
-class _NotificationPageState extends State<NotificationPage> {
-  @override
   Widget build(BuildContext context) {
+    final _favouriteService = FavouriteService();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Notification",
+          "Friends",
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
             fontFamily: "poppins",
           ),
         ),
-      ),
-      body: Column(
-        children: [],
       ),
     );
   }
