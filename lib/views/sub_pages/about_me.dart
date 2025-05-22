@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:gig_finder/widgets/reusable/add_job_input.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:gig_finder/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -106,58 +107,137 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Profile')),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Edit Profile",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            fontFamily: "poppins",
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
                 children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundImage: _imageFile != null
-                        ? FileImage(_imageFile!)
-                        : (_imageUrl != null && _imageUrl!.isNotEmpty)
-                            ? NetworkImage(_imageUrl!)
-                            : NetworkImage(
-                                'https://i.stack.imgur.com/l60Hf.png'),
+                  Center(
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage: _imageFile != null
+                          ? FileImage(_imageFile!)
+                          : (_imageUrl != null && _imageUrl!.isNotEmpty)
+                              ? NetworkImage(_imageUrl!)
+                              : NetworkImage(
+                                  'https://i.stack.imgur.com/l60Hf.png'),
+                    ),
                   ),
                   Positioned(
-                    bottom: 0,
-                    right: 0,
+                    bottom: -8,
+                    right: 102,
                     child: IconButton(
-                      icon: const Icon(Icons.camera_alt),
+                      icon: const Icon(Icons.add_a_photo),
                       onPressed: _pickImage,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              TextFormField(
+              SizedBox(
+                height: 8,
+              ),
+              Center(
+                child: Text(
+                  "Update your profile picture",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 18),
+              Text(
+                "Name",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              AddJobInput(
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: 'Name'),
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter your name' : null,
               ),
-              const SizedBox(height: 16),
-              TextFormField(
+              SizedBox(
+                height: 6,
+              ),
+              Text(
+                "Contact Number",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              AddJobInput(
                 controller: _contactController,
-                decoration: const InputDecoration(labelText: 'Contact Number'),
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter contact number' : null,
               ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _aboutController,
-                decoration: const InputDecoration(labelText: 'About'),
-                maxLines: 3,
+              SizedBox(
+                height: 6,
               ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _saveProfile,
-                child: const Text('Save Changes'),
+              Text(
+                "About",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              AddJobInput(
+                controller: _aboutController,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _saveProfile,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    'Save Changes',
+                    style: TextStyle(
+                      //fontFamily: 'Poppins',
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

@@ -90,133 +90,135 @@ class _UpdatejobdetailsState extends State<Updatejobdetails> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            Text(
-              "Job Title",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            AddJobInput(controller: titleController),
-            SizedBox(
-              height: 6,
-            ),
-            Text(
-              "Description",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            AddJobInput(controller: descriptionController),
-            SizedBox(
-              height: 6,
-            ),
-            Text(
-              "Location",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            AddJobInput(controller: locationController),
-            SizedBox(
-              height: 6,
-            ),
-            Text(
-              "Foods",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            AddJobInput(controller: foodsController),
-            SizedBox(
-              height: 6,
-            ),
-            Text(
-              "Date",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            AddJobInput(controller: dateController),
-            SizedBox(
-              height: 6,
-            ),
-            Text(
-              "Time",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            AddJobInput(controller: timeController),
-            SizedBox(
-              height: 6,
-            ),
-            Text(
-              "Salary",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            AddJobInput(controller: salaryController),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: updateJob,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: const Text(
-                'Update Job',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView(
+            children: [
+              Text(
+                "Job Title",
                 style: TextStyle(
-                  //fontFamily: 'Poppins',
-                  fontSize: 15,
+                  fontSize: 14,
+                  color: Colors.black54,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 3,
+              ),
+              AddJobInput(controller: titleController),
+              SizedBox(
+                height: 6,
+              ),
+              Text(
+                "Description",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              AddJobInput(controller: descriptionController),
+              SizedBox(
+                height: 6,
+              ),
+              Text(
+                "Location",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              AddJobInput(controller: locationController),
+              SizedBox(
+                height: 6,
+              ),
+              Text(
+                "Foods",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              AddJobInput(controller: foodsController),
+              SizedBox(
+                height: 6,
+              ),
+              Text(
+                "Date",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              AddJobInput(controller: dateController),
+              SizedBox(
+                height: 6,
+              ),
+              Text(
+                "Time",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              AddJobInput(controller: timeController),
+              SizedBox(
+                height: 6,
+              ),
+              Text(
+                "Salary",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              AddJobInput(controller: salaryController),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: updateJob,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  'Update Job',
+                  style: TextStyle(
+                    //fontFamily: 'Poppins',
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

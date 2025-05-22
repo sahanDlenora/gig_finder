@@ -188,7 +188,7 @@ class _JobCardState extends State<JobCard> {
                                                   .showSnackBar(
                                                 const SnackBar(
                                                     content:
-                                                        Text('Added to job')),
+                                                        Text('Saved to job')),
                                               );
                                             } else {
                                               await _favouriteService
@@ -197,7 +197,7 @@ class _JobCardState extends State<JobCard> {
                                                   .showSnackBar(
                                                 const SnackBar(
                                                     content: Text(
-                                                        'Removed from job')),
+                                                        'Removed save job')),
                                               );
                                             }
 
@@ -303,7 +303,7 @@ class _JobCardState extends State<JobCard> {
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(height: 8),
+                                  //const SizedBox(height: 2),
                                 ],
                               ),
                             ),

@@ -137,7 +137,8 @@ class _MyJobCardState extends State<MyJobCard> {
                                       backgroundImage: profileUrl != null &&
                                               profileUrl.isNotEmpty
                                           ? NetworkImage(profileUrl)
-                                          : const AssetImage("assets/n.png")
+                                          : const NetworkImage(
+                                                  'https://i.stack.imgur.com/l60Hf.png')
                                               as ImageProvider,
                                     ),
                                     const SizedBox(width: 8),
@@ -166,31 +167,6 @@ class _MyJobCardState extends State<MyJobCard> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                JobApplicant(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 30,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                        ),
-                                        child: Icon(
-                                          Icons.book_online,
-                                          color: Colors.grey,
-                                          size: 22,
-                                        ),
-                                      ),
-                                    ),
                                     PopupMenuButton(
                                       iconColor: Colors.grey,
                                       onSelected: (value) async {
@@ -332,7 +308,7 @@ class _MyJobCardState extends State<MyJobCard> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
+                            //const SizedBox(height: 8),
                           ],
                         ),
                       ),
