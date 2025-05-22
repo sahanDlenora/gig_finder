@@ -87,7 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       width: 40,
                                       height: 40,
                                     )
-                                  : Icon(Icons.person, color: Colors.white),
+                                  : Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                      size: 36,
+                                    ),
                             ),
                           ),
                           Row(
@@ -109,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                   child: Center(
-                                    child: Icon(Icons.add),
+                                    child: Icon(Icons.person_3_outlined),
                                   ),
                                 ),
                               ),

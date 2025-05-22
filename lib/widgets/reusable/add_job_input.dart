@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class AddJobInput extends StatelessWidget {
   final TextEditingController controller;
-  final String lableText;
+  final String? lableText;
   final String? Function(String?)? validator;
   const AddJobInput({
     super.key,
     required this.controller,
-    required this.lableText,
+    this.lableText,
     this.validator,
   });
 
