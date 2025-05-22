@@ -144,6 +144,8 @@ class _JobDetailsState extends State<JobDetails> {
                         const SizedBox(height: 10),
                         JobDetailsShow(txt_1: "Foods", txt_2: widget.job.foods),
                         const SizedBox(height: 10),
+                        JobDetailsShow(txt_1: "date", txt_2: widget.job.date),
+                        const SizedBox(height: 10),
                         JobDetailsShow(
                             txt_1: "Time", txt_2: widget.job.workTime),
                         const SizedBox(height: 10),

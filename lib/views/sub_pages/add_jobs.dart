@@ -15,6 +15,7 @@ class AddJobs extends StatelessWidget {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _foodsController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   final TextEditingController _workTimeController = TextEditingController();
   final TextEditingController _salaryController = TextEditingController();
 
@@ -42,6 +43,7 @@ class AddJobs extends StatelessWidget {
           description: _descriptionController.text,
           location: _locationController.text,
           foods: _foodsController.text,
+          date: _dateController.text,
           workTime: _workTimeController.text,
           salary: double.tryParse(_salaryController.text) ?? 0.0,
           createdAt: DateTime.now(),
@@ -183,6 +185,30 @@ class AddJobs extends StatelessWidget {
                             validator: (value) {
                               if (value?.isEmpty ?? true) {
                                 return "Please enter foods";
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                            "Date",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          AddJobInput(
+                            controller: _foodsController,
+                            lableText: "Enter work date",
+                            validator: (value) {
+                              if (value?.isEmpty ?? true) {
+                                return "Please enter work date";
                               }
                               return null;
                             },
