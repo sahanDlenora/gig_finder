@@ -199,7 +199,9 @@ class _MyJobCardState extends State<MyJobCard> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  Updatejobdetails(),
+                                                  Updatejobdetails(
+                                                job: job,
+                                              ),
                                             ),
                                           );
                                         } else if (value == "2") {

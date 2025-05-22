@@ -100,11 +100,8 @@ class _JobCardState extends State<JobCard> {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: filteredJobs.length,
             itemBuilder: (context, index) {
-
-              _loadFavouriteStatus(job.id);
-
               final job = filteredJobs[index];
-
+              _loadFavouriteStatus(job.id);
 
               return FutureBuilder<Map<String, dynamic>?>(
                 future: getUserById(job.createdBy),
