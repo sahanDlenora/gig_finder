@@ -136,13 +136,13 @@ class _JobCardState extends State<JobCard> {
                                         children: [
                                           CircleAvatar(
                                             radius: 15,
-                                            backgroundImage:
-                                                profileUrl != null &&
-                                                        profileUrl.isNotEmpty
-                                                    ? NetworkImage(profileUrl)
-                                                    : const AssetImage(
-                                                            "assets/n.png")
-                                                        as ImageProvider,
+                                            backgroundImage: profileUrl !=
+                                                        null &&
+                                                    profileUrl.isNotEmpty
+                                                ? NetworkImage(profileUrl)
+                                                : const NetworkImage(
+                                                        'https://i.stack.imgur.com/l60Hf.png')
+                                                    as ImageProvider,
                                           ),
                                           const SizedBox(width: 8),
                                           Column(

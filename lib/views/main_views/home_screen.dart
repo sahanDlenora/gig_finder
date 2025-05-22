@@ -87,10 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       width: 40,
                                       height: 40,
                                     )
-                                  : Icon(
-                                      Icons.person,
-                                      color: Colors.white,
-                                      size: 36,
+                                  : Image.network(
+                                      'https://i.stack.imgur.com/l60Hf.png',
+                                      width: 40,
+                                      height: 40,
+                                      fit: BoxFit.cover,
                                     ),
                             ),
                           ),
@@ -223,6 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "assets/x.jpg",
                           "assets/r.jpg",
                           "assets/b.jpg",
+                          "assets/y.jpg",
                         ].map((path) {
                           return Builder(
                             builder: (context) {

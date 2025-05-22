@@ -16,7 +16,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String userName = "Loading...";
-  String profileImage = "https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg"; // Default image
+  String profileImage = "https://i.stack.imgur.com/l60Hf.png"; // Default image
 
   @override
   void initState() {
@@ -36,21 +36,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           userName = userDoc['name'] ?? "No Name";
           profileImage = userDoc['profilePicture'].isNotEmpty
               ? userDoc['profilePicture']
-              : "https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg";
+              : "https://i.stack.imgur.com/l60Hf.png";
         });
       }
     }
   }
 
   void _logout(BuildContext context) async {
-  try {
-    await AuthService().signOut();
-    context.go('/login'); // Use the correct route name for your login screen
-  } catch (e) {
-    print("Error signing out: $e");
+    try {
+      await AuthService().signOut();
+      context.go('/login'); // Use the correct route name for your login screen
+    } catch (e) {
+      print("Error signing out: $e");
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           backgroundImage: profileImage.startsWith("http")
                               ? NetworkImage(
                                   profileImage) // Firebase storage URL
-                              : AssetImage(profileImage) as ImageProvider,
+                              : AssetImage(profileImage),
                         ),
                         SizedBox(width: 15),
                         Expanded(

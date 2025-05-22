@@ -78,8 +78,8 @@ class _JobDetailsState extends State<JobDetails> {
                                 height: 100,
                                 fit: BoxFit.cover,
                               )
-                            : Image.asset(
-                                "assets/n.png",
+                            : Image.network(
+                                'https://i.stack.imgur.com/l60Hf.png',
                                 width: 100,
                                 height: 100,
                                 fit: BoxFit.cover,
