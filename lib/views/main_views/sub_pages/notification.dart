@@ -14,7 +14,7 @@ class NotificationPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Friends",
+          "Notification",
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,

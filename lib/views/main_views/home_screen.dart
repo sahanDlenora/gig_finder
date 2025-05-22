@@ -221,10 +221,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           aspectRatio: 2,
                         ),
                         items: [
-                          "assets/x.jpg",
+                          "assets/y.jpg",
                           "assets/r.jpg",
                           "assets/b.jpg",
-                          "assets/y.jpg",
+                          "assets/x.jpg",
                         ].map((path) {
                           return Builder(
                             builder: (context) {

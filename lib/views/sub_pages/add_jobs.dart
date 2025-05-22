@@ -204,7 +204,7 @@ class AddJobs extends StatelessWidget {
                             height: 3,
                           ),
                           AddJobInput(
-                            controller: _foodsController,
+                            controller: _dateController,
                             lableText: "Enter work date",
                             validator: (value) {
                               if (value?.isEmpty ?? true) {
