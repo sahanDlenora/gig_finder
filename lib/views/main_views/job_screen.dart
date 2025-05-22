@@ -7,6 +7,7 @@ import 'package:gig_finder/service/job/favouriteService.dart';
 import 'package:gig_finder/service/job/JobApplicationService%20.dart';
 
 import 'package:gig_finder/service/job/job_service.dart';
+import 'package:gig_finder/views/main_views/sub_pages/job_applicant.dart';
 import 'package:gig_finder/views/sub_pages/add_jobs.dart';
 import 'package:gig_finder/widgets/reusable/ApplicantsListWidget.dart';
 import 'package:gig_finder/widgets/reusable/apply_job_card.dart';
@@ -19,6 +20,7 @@ class JobScreen extends StatefulWidget {
   static const List<Tab> myTabs = <Tab>[
     Tab(text: 'My Jobs'),
     Tab(text: 'Apply'),
+    Tab(text: 'Applicants'),
     Tab(text: 'Saved'),
   ];
 
@@ -27,7 +29,6 @@ class JobScreen extends StatefulWidget {
 }
 
 class _JobScreenState extends State<JobScreen> {
-
   final _favouriteService = FavouriteService();
 
   late Future<List<Job>> _appliedJobsFuture;
@@ -37,7 +38,6 @@ class _JobScreenState extends State<JobScreen> {
     super.initState();
     _appliedJobsFuture = JobApplicationService().getAppliedJobs();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -103,34 +103,58 @@ class _JobScreenState extends State<JobScreen> {
                   ],
                 ),
               ),
-              FutureBuilder<List<Job>>(
-                future: _appliedJobsFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(
-                        child: Text('You have not applied to any jobs.'));
-                  }
+              SingleChildScrollView(
+                child: FutureBuilder<List<Job>>(
+                  future: _appliedJobsFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: 50,
+                          ),
+                          const Center(
+                            child: Text(
+                              'You have not applied to any jobs.',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 10,
-                    ),
-                    child: ApplyJobListCard(
-                      jobs: snapshot.data!,
-                      onJobDeleted: () {
-                        setState(() {
-                          _appliedJobsFuture =
-                              JobApplicationService().getAppliedJobs();
-                        });
-                      },
-                    ),
-                  );
-                },
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 10,
+                      ),
+                      child: ApplyJobListCard(
+                        jobs: snapshot.data!,
+                        onJobDeleted: () {
+                          setState(() {
+                            _appliedJobsFuture =
+                                JobApplicationService().getAppliedJobs();
+                          });
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    JobApplicant(),
+                  ],
+                ),
               ),
               Column(
                 children: [
@@ -144,15 +168,20 @@ class _JobScreenState extends State<JobScreen> {
                               child: CircularProgressIndicator());
                         } else if (!snapshot.hasData ||
                             snapshot.data!.isEmpty) {
-                          return const Center(
-                            child: Text(
-                              "No saved jobs yet.",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 50,
                               ),
-                            ),
+                              Text(
+                                "No saved jobs yet.",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           );
                         } else {
                           final jobs = snapshot.data!;

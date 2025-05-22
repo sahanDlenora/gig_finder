@@ -16,76 +16,91 @@ class JobApplicant extends StatefulWidget {
 class _JobApplicantState extends State<JobApplicant> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Applicants",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            fontFamily: "poppins",
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: FutureBuilder<List<Job>>(
-                future: JobService()
-                    .getJobsByUser(FirebaseAuth.instance.currentUser!.uid),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: FutureBuilder<List<Job>>(
+        future:
+            JobService().getJobsByUser(FirebaseAuth.instance.currentUser!.uid),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
 
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Error loading jobs'));
-                  }
+          if (snapshot.hasError) {
+            return Center(child: Text('Error loading jobs'));
+          }
 
-                  final jobs = snapshot.data;
+          final jobs = snapshot.data;
 
-                  if (jobs == null || jobs.isEmpty) {
-                    return Center(child: Text('You have not posted any jobs.'));
-                  }
+          if (jobs == null || jobs.isEmpty) {
+            return Column(
+              children: [
+                SizedBox(
+                  height: 50,
+                ),
+                Center(
+                  child: Text(
+                    'You have not posted any jobs.',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
 
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: jobs.length,
-                    itemBuilder: (context, index) {
-                      final job = jobs[index];
-                      return Card(
-                        elevation: 3,
-                        margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: jobs.length,
+            itemBuilder: (context, index) {
+              final job = jobs[index];
+              return Card(
+                color: Colors.grey.shade200,
+                elevation: 1,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        job.title,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                      Text(
+                        'Applicants',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      SizedBox(
+                        height: 116,
+                        child: SingleChildScrollView(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(job.title,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold)),
-                              SizedBox(height: 8),
-                              Text(job.description),
-                              SizedBox(height: 12),
-                              Text('Applicants:',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600)),
                               ApplicantsListWidget(jobId: job.id),
                             ],
                           ),
                         ),
-                      );
-                    },
-                  );
-                },
-              )),
-        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

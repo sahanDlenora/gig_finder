@@ -68,7 +68,8 @@ class ApplyJobListCard extends StatelessWidget {
                                 radius: 15,
                                 backgroundImage: profileUrl != null
                                     ? NetworkImage(profileUrl)
-                                    : const AssetImage("assets/n.png")
+                                    : const NetworkImage(
+                                            'https://i.stack.imgur.com/l60Hf.png')
                                         as ImageProvider,
                               ),
                               const SizedBox(width: 8),
@@ -93,37 +94,52 @@ class ApplyJobListCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
-                            onPressed: () async {
-                              final confirm = await showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: Text('Confirm Deletion'),
-                                  content: Text(
-                                      'Are you sure you want to delete this job application?'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(false),
-                                      child: Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(true),
-                                      child: Text('Delete',
-                                          style: TextStyle(color: Colors.red)),
-                                    ),
-                                  ],
-                                ),
-                              );
+                          Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                              onPressed: () async {
+                                final confirm = await showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text('Confirm Deletion'),
+                                    content: Text(
+                                        'Are you sure you want to delete this job application?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(false),
+                                        child: Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(true),
+                                        child: Text('Delete',
+                                            style:
+                                                TextStyle(color: Colors.red)),
+                                      ),
+                                    ],
+                                  ),
+                                );
 
-                              if (confirm == true) {
-                                await JobApplicationService()
-                                    .deleteAppliedJob(job.id);
-                                onJobDeleted(); // Refresh list
-                              }
-                            },
+                                if (confirm == true) {
+                                  await JobApplicationService()
+                                      .deleteAppliedJob(job.id);
+                                  onJobDeleted(); // Refresh list
+                                }
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.grey,
+                                size: 22,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -150,6 +166,57 @@ class ApplyJobListCard extends StatelessWidget {
                               color: Colors.green.shade400,
                               fontWeight: FontWeight.bold,
                             ),
+                          ),
+                          Row(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  GoRouter.of(context).push(
+                                    "/job-details",
+                                    extra: job,
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  backgroundColor: Colors.transparent,
+                                  shadowColor: Colors.transparent,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100)),
+                                ),
+                                child: Container(
+                                  width: 40,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.document_scanner_outlined,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 0,
+                              ),
+                              Container(
+                                width: 40,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.upload_outlined,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
