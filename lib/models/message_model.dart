@@ -15,3 +15,26 @@ class Message {
     required this.timestamp,
   });
 
+   // Convert to Map (for storing in Firestore)
+  Map<String, dynamic> toMap() {
+    return {
+      'senderID': senderID,
+      'senderEmail': senderEmail,
+      'receiverID': receiverID,
+      'message': message,
+      'timestamp': timestamp,
+    };
+  }
+
+  // Optional: Convert from Map (for reading from Firestore)
+  factory Message.fromMap(Map<String, dynamic> map) {
+    return Message(
+      senderID: map['senderID'] ?? '',
+      senderEmail: map['senderEmail'] ?? '',
+      receiverID: map['receiverID'] ?? '',
+      message: map['message'] ?? '',
+      timestamp: map['timestamp'] ?? Timestamp.now(),
+    );
+  }
+}
+
