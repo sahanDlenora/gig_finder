@@ -12,27 +12,7 @@ class ProfileElement extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Center(
-                child: Icon(
-                  iconName,
-                  color: Colors.green,
-                  size: 18,
-                ),
-              ),
-            ),
+  
             SizedBox(
               width: 12,
             ),
