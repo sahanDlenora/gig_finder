@@ -42,35 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  void _logout(BuildContext context) async {
-    try {
-      await AuthService().signOut();
-      context.go('/login'); // Use the correct route name for your login screen
-    } catch (e) {
-      print("Error signing out: $e");
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    "Profile",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "poppins",
-                    ),
-                  ),
-                ),
+ 
                 SizedBox(height: 8),
 
                 // Profile Info Section
