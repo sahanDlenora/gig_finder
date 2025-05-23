@@ -2,34 +2,6 @@ import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Job {
-  String id;
-  String title;
-  String description;
-  String location;
-  String foods;
-  String date;
-  String workTime;
-  double salary;
-  String createdBy;
-  DateTime createdAt;
-  DateTime updatedAt;
-  bool isUpdated;
-
-  Job({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.location,
-    required this.foods,
-    required this.date,
-    required this.workTime,
-    required this.salary,
-    required this.createdBy,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.isUpdated,
-  });
 
   /// ✅ FIXED: Provide all required fields when constructing Job from Firestore
   factory Job.fromFirestore(DocumentSnapshot doc) {
