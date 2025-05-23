@@ -36,7 +36,13 @@ class ProfileElement extends StatelessWidget {
             SizedBox(
               width: 12,
             ),
-         
+         Text(
+              profileElementName,
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black54),
+            ),
           ],
         ),
         Text(
