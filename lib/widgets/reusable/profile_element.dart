@@ -25,7 +25,14 @@ class ProfileElement extends StatelessWidget {
                 color: Colors.grey.shade300,
                 borderRadius: BorderRadius.circular(100),
               ),
-
+              child: Center(
+                child: Icon(
+                  iconName,
+                  color: Colors.green,
+                  size: 18,
+                ),
+              ),
+            ),
             SizedBox(
               width: 12,
             ),
