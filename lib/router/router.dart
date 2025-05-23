@@ -28,7 +28,13 @@ class RouterClass {
     },
     routes: [
       //initial Route (Responsive Layout)
-     
+         GoRoute(
+        name: "start",
+        path: "/start",
+        builder: (context, state) {
+          return Start();
+        },
+      ),
 
       //register Page
       GoRoute(
