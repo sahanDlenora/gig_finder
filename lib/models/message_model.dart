@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Job {
-  String id;
-  String title;
-  String description;
-  String location;
-  String foods;
-  String date;
-  String workTime;
-  double salary;
-  String createdBy;
-  DateTime createdAt;
-  DateTime updatedAt;
-  bool isUpdated;
+class Message {
+  final String senderID;
+  final String senderEmail;
+  final String receiverID;
+  final String message;
+  final Timestamp timestamp;
+
+  Message({
+    required this.senderID,
+    required this.senderEmail,
+    required this.receiverID,
+    required this.message,
+    required this.timestamp,
+  });
 
