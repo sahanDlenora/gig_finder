@@ -28,22 +28,7 @@ class RouterClass {
     },
     routes: [
       //initial Route (Responsive Layout)
-      GoRoute(
-        name: "start",
-        path: "/start",
-        builder: (context, state) {
-          return Start();
-        },
-      ),
-      GoRoute(
-        path: "/",
-        name: "nav_layout",
-        builder: (context, state) {
-          return const ResponsiveLayoutScreen(
-              MobileScreenLayout: MobileScreenLayout(),
-              WebScreenLayout: WebScreenLayout());
-        },
-      ),
+     
 
       //register Page
       GoRoute(
