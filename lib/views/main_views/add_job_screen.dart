@@ -20,6 +20,17 @@ class _AddJobScreenState extends State<AddJobScreen> {
               horizontal: 15,
               vertical: 10,
             ),
+               child: Column(
+              children: [
+                Text(
+                  "Add Jobs",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "poppins",
+                  ),
+                ),
+
 
     );
   }
