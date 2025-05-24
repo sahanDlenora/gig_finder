@@ -51,6 +51,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+   @override
+  
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Text(
+                    "Profile",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "poppins",
+                    ),
+                  ),
+                ),
+                
                 SizedBox(height: 8),
 
                 // Profile Info Section
