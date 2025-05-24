@@ -33,7 +33,12 @@ class AddJobInput extends StatelessWidget {
                 color: Colors.green.shade100), // Default border color
             borderRadius: BorderRadius.circular(8),
           ),
-   
+
+             focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.green.shade300),
+            borderRadius: BorderRadius.circular(12),
+          ),
+
     );
   }
 }
