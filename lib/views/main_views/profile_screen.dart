@@ -42,7 +42,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
- 
+ void _logout(BuildContext context) async {
+    try {
+      await AuthService().signOut();
+      context.go('/login'); // Use the correct route name for your login screen
+    } catch (e) {
+      print("Error signing out: $e");
+    }
+  }
+
                 SizedBox(height: 8),
 
                 // Profile Info Section
