@@ -30,8 +30,17 @@ class _AddJobScreenState extends State<AddJobScreen> {
                     fontFamily: "poppins",
                   ),
                 ),
+                       SizedBox(
+                  height: 8,
+                ),
+                AddJobs(),
+              ],
+            ),
+          ),
+        ),
+      ),
 
 
-    );
+   );
   }
 }
